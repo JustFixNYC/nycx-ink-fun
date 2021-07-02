@@ -16,3 +16,8 @@ Then in another terminal, run:
 ```
 node fun.js
 ```
+
+## Related projects
+
+- [JustFixNYC/textit-webhook-fun](https://github.com/JustFixNYC/textit-webhook-fun) is a 2020 experiment to model a TextIt/RapidPro flow as a finite state machine in TypeScript.
+- [toolness/justfix-interview-ts-fun](https://github.com/toolness/justfix-interview-ts-fun) is a 2018 experiment to build a conversational system that could work across many different media including SMS and web.
