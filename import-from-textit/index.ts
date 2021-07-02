@@ -20,7 +20,7 @@ type TextItAction =
 
 type TextItExit = {
   uuid: string;
-  destination_uuid: string;
+  destination_uuid?: string | null;
 };
 
 type TextItCategory = {
@@ -94,6 +94,16 @@ function validateExportAssumptions(t: TextitExport) {
           assert.strictEqual(router.type, "switch");
           if (router.wait) {
             assert.strictEqual(router.wait.type, "msg");
+          }
+        } else {
+          assert.strictEqual(node.exits.length, 1);
+        }
+        for (let exit of node.exits) {
+          if (
+            exit.destination_uuid !== null &&
+            exit.destination_uuid !== undefined
+          ) {
+            assert.strictEqual(typeof exit.destination_uuid, "string");
           }
         }
       } catch (e) {
