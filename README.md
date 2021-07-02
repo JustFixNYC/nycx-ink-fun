@@ -1,6 +1,7 @@
 ## Prerequisites
 
 - Download the [latest release of ink](https://github.com/inkle/ink/releases) and put it on your `PATH` (i.e., you should be able to run `inklecate` from the terminal).
+- You will also need [node](https://nodejs.org) and [yarn](https://yarnpkg.com/getting-started/install).
 
 ## Quick start
 
