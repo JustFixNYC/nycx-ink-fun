@@ -116,4 +116,62 @@ function validateExportAssumptions(t: TextitExport) {
   }
 }
 
+function escapeInkText(text: string): string {
+  return text.replace(/\/\//g, "\\/\\/");
+}
+
+function inkUuid(uuid: string): string {
+  return uuid.replace(/-/g, "_");
+}
+
+function exportFlowAsInk(flow: TextItFlow) {
+  let wrote_initial_divert = false;
+
+  console.log(`// Export of TextIt flow "${flow.name}" (${flow.uuid})\n`);
+
+  for (let node of flow.nodes) {
+    if (!wrote_initial_divert) {
+      console.log(`-> ${inkUuid(node.uuid)}\n`);
+      wrote_initial_divert = true;
+    }
+
+    console.log(`== ${inkUuid(node.uuid)} ==\n`);
+
+    for (let action of node.actions) {
+      if (action.type === "send_msg") {
+        console.log(escapeInkText(action.text) + "\n");
+      } else if (action.type === "enter_flow") {
+        console.log(`TODO: Implement this!`);
+        console.log(`ENTER FLOW "${action.flow.name}"\n`);
+      }
+    }
+
+    const { router } = node;
+
+    if (router) {
+      if (router.result_name) {
+        console.log(`// TextIt result name: ${router.result_name}\n`);
+      }
+      for (let cat of router.categories) {
+        console.log(`* ${cat.name}`);
+        for (let exit of node.exits) {
+          if (exit.uuid === cat.exit_uuid) {
+            const divert = inkUuid(exit.destination_uuid || "END");
+            console.log(`  -> ${divert}`);
+          }
+        }
+      }
+    } else {
+      const exit = node.exits[0];
+      const divert = inkUuid(exit.destination_uuid || "END");
+      console.log(`-> ${divert}`);
+    }
+    console.log();
+  }
+}
+
 validateExportAssumptions(EXPORTED_JSON);
+
+for (let flow of EXPORTED_JSON.flows) {
+  exportFlowAsInk(flow);
+}
