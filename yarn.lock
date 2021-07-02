@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@justfixnyc/util@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@justfixnyc/util/-/util-0.3.0.tgz#ff436d64ef5cb1b8a069b9c51ec418952a0bcc1a"
+  integrity sha512-Iuj6x5PPhtaHFNLYfZoIOFIwV4ysPGt7EapgfO8hYlQprHRcZfxBXb51ZHmWx3I7Ak5VZLgOLc8/HLFkZjWKlw==
+
 "@types/node@^15.14.0":
   version "15.14.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.14.0.tgz#74dbf254fb375551a9d2a71faf6b9dbc2178dc53"

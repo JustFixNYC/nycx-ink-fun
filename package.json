@@ -11,6 +11,7 @@
     "watch": "yarn build:ink && tsc --watch --preserveWatchOutput"
   },
   "dependencies": {
+    "@justfixnyc/util": "^0.3.0",
     "@types/node": "^15.14.0",
     "inkjs": "^2.0.0",
     "prettier": "^2.3.2",
