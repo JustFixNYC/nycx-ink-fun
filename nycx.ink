@@ -1,5 +1,9 @@
 // This is based on: https://textit.in/flow/editor/c996fc46-4fcd-4181-a658-f688566c2577/
 
+-> beginning
+
+== beginning ==
+
 It sounds like your apartment needs repairs. First, tell us a little about who owns your apartment.
 
 * NYCHA
@@ -78,17 +82,20 @@ What is your address and borough (without your unit/apartment number)? Example: 
 
 >>> PREDICT_HOUSING_TYPE
 
-* RENT_STABILIZED
++ RENT_STABILIZED
   It's likely that you have a rent stabilized apartment. This means that you have extra protections against eviction and rent increases.
   -> private_landlord.rent_regulated
-* NYCHA
++ NYCHA
   -> nycha
-* MARKET_RATE
++ MARKET_RATE
   It looks like you live in market rate (non rent-regulated) housing.
   -> private_landlord.non_rent_regulated
 + INVALID
   Hmm, that doesn't seem to be a valid address. Let's try again.
   -> predict_housing_type
++ ERROR
+  Unfortunately, we're having technical difficulties and can't help you identify your housing type right now.
+  -> beginning
 
 == loc ==
 
