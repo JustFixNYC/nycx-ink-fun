@@ -1,0 +1,3153 @@
+{
+  "version": "13",
+  "site": "https://textit.in",
+  "flows": [
+    {
+      "name": "PROTOTYPE: NYCx Repairs",
+      "uuid": "c996fc46-4fcd-4181-a658-f688566c2577",
+      "spec_version": "13.1.0",
+      "language": "eng",
+      "type": "messaging",
+      "nodes": [
+        {
+          "uuid": "444202c9-fa93-49f5-b149-e48fe3dbe884",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "It sounds like your apartment needs repairs. First, tell us a little about who owns your apartment.\n\nYou can say:\n\nNYCHA  \n\nPRIVATE LANDLORD or\n\nI'M NOT SURE",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "2dee52c9-3619-4de4-bb11-aff2080ebb9a"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "69fa6e25-df27-4f38-b4c4-6eee87361f8e",
+              "destination_uuid": "e94c4b92-6870-49c4-9476-9b4a5ddd8831"
+            }
+          ]
+        },
+        {
+          "uuid": "e94c4b92-6870-49c4-9476-9b4a5ddd8831",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "060b4008-01df-48de-9a14-d570b6f34a0e",
+            "cases": [
+              {
+                "arguments": [
+                  "nycha"
+                ],
+                "type": "has_any_word",
+                "uuid": "201838c0-2ad0-4b8a-9da4-699498934f35",
+                "category_uuid": "cd2527e8-5f43-4f20-bf46-1f50913ebbe0"
+              },
+              {
+                "arguments": [
+                  "private"
+                ],
+                "type": "has_any_word",
+                "uuid": "853366ac-61e9-4b47-84cb-d5205c4920e1",
+                "category_uuid": "01632aee-806c-47d1-868f-6f6f229d2da6"
+              },
+              {
+                "arguments": [
+                  "I'm not sure"
+                ],
+                "type": "has_any_word",
+                "uuid": "eb19d0fe-9721-4b9b-8d79-6b5b3d49425e",
+                "category_uuid": "eec56750-16a6-404d-b62a-d1a4015c05e3"
+              },
+              {
+                "arguments": [
+                  "not sure"
+                ],
+                "type": "has_any_word",
+                "uuid": "52581037-f14f-4b47-82c4-661db6bba5e3",
+                "category_uuid": "eec56750-16a6-404d-b62a-d1a4015c05e3"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "cd2527e8-5f43-4f20-bf46-1f50913ebbe0",
+                "name": "NYCHA",
+                "exit_uuid": "73e8e3bd-f6b1-4037-918b-1a856bb7be29"
+              },
+              {
+                "uuid": "01632aee-806c-47d1-868f-6f6f229d2da6",
+                "name": "Private Landlord",
+                "exit_uuid": "4508dc9b-a072-48cb-ab4e-de9a7c731ea3"
+              },
+              {
+                "uuid": "eec56750-16a6-404d-b62a-d1a4015c05e3",
+                "name": "Unsure",
+                "exit_uuid": "5fce0cac-e100-4810-8958-f7f8059b0c54"
+              },
+              {
+                "uuid": "060b4008-01df-48de-9a14-d570b6f34a0e",
+                "name": "Other",
+                "exit_uuid": "8c2e34ac-4135-42f5-9866-5ff7962a8450"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "HousingType"
+          },
+          "exits": [
+            {
+              "uuid": "73e8e3bd-f6b1-4037-918b-1a856bb7be29",
+              "destination_uuid": "65349ded-3fa2-4baa-ace9-67e796a97289"
+            },
+            {
+              "uuid": "4508dc9b-a072-48cb-ab4e-de9a7c731ea3",
+              "destination_uuid": "c243019c-72a7-41f5-a6e9-7d64773310f0"
+            },
+            {
+              "uuid": "5fce0cac-e100-4810-8958-f7f8059b0c54",
+              "destination_uuid": "1102d4f8-519d-4f13-9aea-84248b27cc54"
+            },
+            {
+              "uuid": "8c2e34ac-4135-42f5-9866-5ff7962a8450",
+              "destination_uuid": "444202c9-fa93-49f5-b149-e48fe3dbe884"
+            }
+          ]
+        },
+        {
+          "uuid": "65349ded-3fa2-4baa-ace9-67e796a97289",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "It looks like you live in public housing (aka NYCHA). To ask NYCHA directly for repairs, call the Customer Contact Center (\"CCC\") at 718-707-7771.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "37517284-b742-4e48-948f-a8c769865823"
+            },
+            {
+              "attachments": [],
+              "text": "We know NYCHA does not always respond to tenants who need repairs. Would you like to hear more options for getting repairs? ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "c8e500d0-dce3-4bbe-bc4b-930b1a1c05c1"
+            },
+            {
+              "attachments": [],
+              "text": "You can say YES to learn more repairs or NO to learn more about other housing rights.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "c111f912-c655-4678-8450-3a9b4af21e7e"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "738307f6-593e-4298-951f-679a204fb2fd",
+              "destination_uuid": "aedb06e6-bd86-49c2-bde0-5fb5b9c5ced3"
+            }
+          ]
+        },
+        {
+          "uuid": "c243019c-72a7-41f5-a6e9-7d64773310f0",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "You selected private landlord!  Is your apartment rent-regulated*? \n\nYou can say: YES, NO, or I DON'T KNOW\n\n*Rent regulated includes rent-stabilized, rent controlled, project-based Section 8, HUD, Mitchell Lama",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "4885a764-3696-4188-aa77-df7717f240ba"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "aba45c8c-2d87-4b38-8b14-bb162b5a163b",
+              "destination_uuid": "66ca669e-e1f2-40b0-8fd1-69971a7e1297"
+            }
+          ]
+        },
+        {
+          "uuid": "1102d4f8-519d-4f13-9aea-84248b27cc54",
+          "actions": [
+            {
+              "uuid": "61244cef-7ec8-4972-bfbb-02c9af9219f4",
+              "type": "enter_flow",
+              "flow": {
+                "uuid": "d4a35373-eaea-493a-a362-37be72a38acf",
+                "name": "PROTOTYPE: NYCx Ask Address"
+              }
+            }
+          ],
+          "router": {
+            "type": "switch",
+            "operand": "@child.run.status",
+            "cases": [
+              {
+                "uuid": "8997dc19-595e-4b55-9265-cea6777c1dce",
+                "type": "has_only_text",
+                "arguments": [
+                  "completed"
+                ],
+                "category_uuid": "96d78e63-0da9-49e5-8de0-cc3dca0e91fc"
+              },
+              {
+                "uuid": "f028914a-e4d2-411e-b91e-8937aaee4cc5",
+                "arguments": [
+                  "expired"
+                ],
+                "type": "has_only_text",
+                "category_uuid": "eaaa96b8-5259-4179-8089-b7d348e4f264"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "96d78e63-0da9-49e5-8de0-cc3dca0e91fc",
+                "name": "Complete",
+                "exit_uuid": "54d558e5-bf88-406d-8754-b88315b950c7"
+              },
+              {
+                "uuid": "eaaa96b8-5259-4179-8089-b7d348e4f264",
+                "name": "Expired",
+                "exit_uuid": "4994f05c-d3db-468d-a72c-edf5b5831262"
+              }
+            ],
+            "default_category_uuid": "eaaa96b8-5259-4179-8089-b7d348e4f264"
+          },
+          "exits": [
+            {
+              "uuid": "54d558e5-bf88-406d-8754-b88315b950c7",
+              "destination_uuid": "abb3b42c-fbb9-458e-affa-4948131b7033"
+            },
+            {
+              "uuid": "4994f05c-d3db-468d-a72c-edf5b5831262",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "66ca669e-e1f2-40b0-8fd1-69971a7e1297",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "dec0094d-3830-4653-96ba-c820a31bbc24",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "fff0c787-97af-4135-8894-27c7a4d7edd6",
+                "category_uuid": "f889387b-ac76-4701-a0e9-9384851a8064"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "43ab7fcb-1b7f-47ae-b7c0-c0bb3422485b",
+                "category_uuid": "5975cd03-5a66-449d-aa93-c81c6928e105"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "f889387b-ac76-4701-a0e9-9384851a8064",
+                "name": "Yes",
+                "exit_uuid": "28480316-aa24-47fa-9665-b52fd7505f3f"
+              },
+              {
+                "uuid": "5975cd03-5a66-449d-aa93-c81c6928e105",
+                "name": "No",
+                "exit_uuid": "f6381621-66c7-4a55-874a-fcecdf19fa5f"
+              },
+              {
+                "uuid": "dec0094d-3830-4653-96ba-c820a31bbc24",
+                "name": "Other",
+                "exit_uuid": "2b223010-9279-436f-92a9-2bf424470dd2"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "regulated"
+          },
+          "exits": [
+            {
+              "uuid": "28480316-aa24-47fa-9665-b52fd7505f3f",
+              "destination_uuid": "293ea029-26d2-449b-a1cb-ee805802b287"
+            },
+            {
+              "uuid": "f6381621-66c7-4a55-874a-fcecdf19fa5f",
+              "destination_uuid": "6d7101da-e1dd-4e99-a037-6294e7da8740"
+            },
+            {
+              "uuid": "2b223010-9279-436f-92a9-2bf424470dd2",
+              "destination_uuid": "4831b82b-3b44-47bc-8b33-de75cea2ca55"
+            }
+          ]
+        },
+        {
+          "uuid": "abb3b42c-fbb9-458e-affa-4948131b7033",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "d56de024-a06c-4822-88c2-4c6e42972fd7",
+            "categories": [
+              {
+                "uuid": "f986237d-220f-4547-85be-7837352464d1",
+                "name": "Address found",
+                "exit_uuid": "0091aa15-ae86-43de-b7ed-c0573be14686"
+              },
+              {
+                "uuid": "d56de024-a06c-4822-88c2-4c6e42972fd7",
+                "name": "Other",
+                "exit_uuid": "2908845f-3783-4e2d-8aa8-c2c702e603cb"
+              }
+            ],
+            "cases": [
+              {
+                "arguments": [],
+                "type": "has_text",
+                "uuid": "ef3d309c-b94c-4638-9f13-95d805111455",
+                "category_uuid": "f986237d-220f-4547-85be-7837352464d1"
+              }
+            ],
+            "operand": "@child.results.success"
+          },
+          "exits": [
+            {
+              "uuid": "0091aa15-ae86-43de-b7ed-c0573be14686",
+              "destination_uuid": "3eeb5483-87d0-471b-bb60-55e42307ddbe"
+            },
+            {
+              "uuid": "2908845f-3783-4e2d-8aa8-c2c702e603cb"
+            }
+          ]
+        },
+        {
+          "uuid": "293ea029-26d2-449b-a1cb-ee805802b287",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "If you're ready to report your housing problems to the City, you can call 311. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "9ee706de-b974-4237-8b77-3661876693e3"
+            },
+            {
+              "attachments": [],
+              "text": "The City should send an inspector from the New York City Department of Housing Preservation and Development (\"HPD\"). Do you want to learn more about an HPD inspection?\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "035492b2-dbe4-4e8e-bcc8-dbb3778a68d1"
+            },
+            {
+              "attachments": [],
+              "text": "You can say: \n\nYES, to learn more about inspections or NO if you've already called 311 and want to explore other options.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "2c5940f8-1101-48d7-b78c-ef56e276c8b0"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "708e87ad-cd79-42e5-9152-0dc9b7cf58f8",
+              "destination_uuid": "127c3419-3772-4e67-b3fe-18dffc5d4855"
+            }
+          ]
+        },
+        {
+          "uuid": "aedb06e6-bd86-49c2-bde0-5fb5b9c5ced3",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "5a03641e-358b-460f-9438-7c2c3df142bc",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "ae648e07-0ad8-4087-ac35-4e520af0e0fd",
+                "category_uuid": "55e7137f-3ffc-44f5-ad1b-7711f5b77712"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "5cad045c-f430-44aa-a7aa-aa33cdfe1b46",
+                "category_uuid": "78f77d1d-5c54-4eb9-9c25-85932c50dbaa"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "55e7137f-3ffc-44f5-ad1b-7711f5b77712",
+                "name": "Yes",
+                "exit_uuid": "b49b667f-f93f-4737-83a9-dd9e5162bad8"
+              },
+              {
+                "uuid": "78f77d1d-5c54-4eb9-9c25-85932c50dbaa",
+                "name": "No",
+                "exit_uuid": "5c60b9a7-e9eb-4f8c-a8d5-c486e347c3b4"
+              },
+              {
+                "uuid": "5a03641e-358b-460f-9438-7c2c3df142bc",
+                "name": "Other",
+                "exit_uuid": "0998f9a8-4ff5-462d-85a3-47a4362d3859"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "More about repairs in NYCHA"
+          },
+          "exits": [
+            {
+              "uuid": "b49b667f-f93f-4737-83a9-dd9e5162bad8",
+              "destination_uuid": "f77fea71-45e7-44cd-8d74-5a93d033ae14"
+            },
+            {
+              "uuid": "5c60b9a7-e9eb-4f8c-a8d5-c486e347c3b4",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "0998f9a8-4ff5-462d-85a3-47a4362d3859",
+              "destination_uuid": "f77fea71-45e7-44cd-8d74-5a93d033ae14"
+            }
+          ]
+        },
+        {
+          "uuid": "3eeb5483-87d0-471b-bb60-55e42307ddbe",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "a11f9490-622b-47f5-a9df-7b89f392abfa",
+            "categories": [
+              {
+                "uuid": "70b3076d-6a81-4ed4-a1b0-e1b120b452a3",
+                "name": "Rent stabilized",
+                "exit_uuid": "9d821f69-87c5-4f06-8ae4-140d1d6f81e9"
+              },
+              {
+                "uuid": "a95c1a3b-cdca-4456-8b04-4e36972b782e",
+                "name": "NYCHA",
+                "exit_uuid": "c91a6959-8764-4642-9ab5-8d623d6cc3b6"
+              },
+              {
+                "uuid": "e34fe3ca-9416-4579-a091-d09bc369e3c1",
+                "name": "Market rate",
+                "exit_uuid": "e5b07e5f-3757-4ef8-96df-067c1ea06e22"
+              },
+              {
+                "uuid": "a11f9490-622b-47f5-a9df-7b89f392abfa",
+                "name": "Other",
+                "exit_uuid": "fbe7ab60-6b6b-4845-96c2-7ba5119631a8"
+              }
+            ],
+            "cases": [
+              {
+                "arguments": [
+                  "RENT_STABILIZED"
+                ],
+                "type": "has_any_word",
+                "uuid": "ebe88064-2d70-4855-b6c5-41b7c059f94f",
+                "category_uuid": "70b3076d-6a81-4ed4-a1b0-e1b120b452a3"
+              },
+              {
+                "arguments": [
+                  "NYCHA"
+                ],
+                "type": "has_any_word",
+                "uuid": "6812485e-469e-47be-89fc-251cbb38b5d7",
+                "category_uuid": "a95c1a3b-cdca-4456-8b04-4e36972b782e"
+              },
+              {
+                "arguments": [
+                  "MARKET_RATE"
+                ],
+                "type": "has_any_word",
+                "uuid": "874c1017-7f86-4b1f-aa27-7249a47b0d61",
+                "category_uuid": "e34fe3ca-9416-4579-a091-d09bc369e3c1"
+              }
+            ],
+            "operand": "@child.results.predicted_housing_type"
+          },
+          "exits": [
+            {
+              "uuid": "9d821f69-87c5-4f06-8ae4-140d1d6f81e9",
+              "destination_uuid": "695c6ac1-4577-45b6-9352-b4329c834636"
+            },
+            {
+              "uuid": "c91a6959-8764-4642-9ab5-8d623d6cc3b6",
+              "destination_uuid": "65349ded-3fa2-4baa-ace9-67e796a97289"
+            },
+            {
+              "uuid": "e5b07e5f-3757-4ef8-96df-067c1ea06e22",
+              "destination_uuid": "6d7101da-e1dd-4e99-a037-6294e7da8740"
+            },
+            {
+              "uuid": "fbe7ab60-6b6b-4845-96c2-7ba5119631a8",
+              "destination_uuid": "6d7101da-e1dd-4e99-a037-6294e7da8740"
+            }
+          ]
+        },
+        {
+          "uuid": "4831b82b-3b44-47bc-8b33-de75cea2ca55",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "While you can definitely use this TextBot to learn more about your right to get repairs today, you may want to speak with a lawyer before taking action. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "da704da4-ea7c-4c58-ae5b-f76d4c1799d7"
+            },
+            {
+              "attachments": [],
+              "text": "Before we go on, do you want to learn about speaking to a free housing lawyer?  \n\nYou can say: YES or NO",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "fcb1b4cd-2526-4e04-b7d2-8a98b6d3d142"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "b7b4708c-9e97-4048-801f-b84e0a26d018",
+              "destination_uuid": "421d1fab-3344-4f15-90bb-8e1f8617ec4c"
+            }
+          ]
+        },
+        {
+          "uuid": "6d7101da-e1dd-4e99-a037-6294e7da8740",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "It looks like you are a market rate tenant.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "5d23d79f-4fab-4216-b7bb-c1a0b95a8b6f"
+            },
+            {
+              "attachments": [],
+              "text": "Retaliation is illegal but before taking action, you may want to speak to a lawyer.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "110dfced-4cd7-4646-a740-12097f694988"
+            },
+            {
+              "attachments": [],
+              "text": "Do you want to learn about legal resources in your neighborhood? Write YES to speak to a lawyer and NO if you feel ready to start learning about how to take action.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "2d23f65f-9654-44fb-b1b8-9a9bd1754751"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "4bb8abec-1c98-402e-95f2-c2e6d1b6586b",
+              "destination_uuid": "421d1fab-3344-4f15-90bb-8e1f8617ec4c"
+            }
+          ]
+        },
+        {
+          "uuid": "f77fea71-45e7-44cd-8d74-5a93d033ae14",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "To write a letter of complaint to NYCHA that explains all your repair issues, you can use JustFix's Complaint Tool: https://app.justfix.nyc/en/loc.  \n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "efbb2351-64e0-47dc-8a1c-dbac361fac00"
+            },
+            {
+              "attachments": [],
+              "text": "JustFix will send this letter to NYCHA via certified mail at no cost to you.\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "7d9b8916-0d1a-4b89-a013-6305508d1a6d"
+            },
+            {
+              "attachments": [],
+              "text": "We also understand that NYCHA does not always respond to letters from tenants. Do you want to learn about how to sue NYCHA for repairs?\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "284423b6-aea7-4c3a-a000-46223aa69e71"
+            },
+            {
+              "attachments": [],
+              "text": "You can say: YES to hear about how to sue NYCHA for repairs or NO to learn about other housing rights.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "564c11e6-a438-499d-bd94-a0459d0feb0f"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "c468d0fa-3479-451d-9144-d8c31516cbb2",
+              "destination_uuid": "57a2839f-ceb6-4cec-b785-af682b3ec0ac"
+            }
+          ]
+        },
+        {
+          "uuid": "695c6ac1-4577-45b6-9352-b4329c834636",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Based on our research, there's a good chance you live in rent stabilized housing.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "5901ad79-dad5-4773-bdd2-2630bb0f25ff"
+            },
+            {
+              "attachments": [],
+              "text": "But, if you're not sure, there are ways to explore further!  ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "4a4d2f3d-8578-4b86-af6f-8080c4a324fc"
+            },
+            {
+              "attachments": [],
+              "text": "Do you want to learn more about whether you are rent stabilized? \n\nTo learn about whether you are rent stabilized, say YES. To keep learning about repairs, say NO.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "5155b323-fd59-4471-a75f-9c22f563e66f"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "d2e5edc4-490b-445b-96e7-fd6b894fa7e2",
+              "destination_uuid": "7c896d5e-e977-4239-9dea-27218308962e"
+            }
+          ]
+        },
+        {
+          "uuid": "127c3419-3772-4e67-b3fe-18dffc5d4855",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "cb916e48-a43b-463e-b85f-20d95c4ba0c4",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "d36a8c3c-e717-4e15-b843-9d174ef5bd59",
+                "category_uuid": "1757d6f8-c689-4840-a55a-366a1549322a"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "c3c85a00-b011-4836-8325-172393f2cc56",
+                "category_uuid": "2a4d832b-35ec-4dd7-876f-39e03bfdbb64"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "1757d6f8-c689-4840-a55a-366a1549322a",
+                "name": "Yes",
+                "exit_uuid": "0b2204ed-9d72-47eb-8e39-0219c608183b"
+              },
+              {
+                "uuid": "2a4d832b-35ec-4dd7-876f-39e03bfdbb64",
+                "name": "No",
+                "exit_uuid": "08debd2d-4249-4c4e-9551-155f7a7b597f"
+              },
+              {
+                "uuid": "cb916e48-a43b-463e-b85f-20d95c4ba0c4",
+                "name": "Other",
+                "exit_uuid": "37b05ce8-af56-40b6-a176-6904e677d635"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "LOC or More inspection"
+          },
+          "exits": [
+            {
+              "uuid": "0b2204ed-9d72-47eb-8e39-0219c608183b",
+              "destination_uuid": "5381de23-dc05-42c9-9432-1a6c9182c545"
+            },
+            {
+              "uuid": "08debd2d-4249-4c4e-9551-155f7a7b597f",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            },
+            {
+              "uuid": "37b05ce8-af56-40b6-a176-6904e677d635",
+              "destination_uuid": "5381de23-dc05-42c9-9432-1a6c9182c545"
+            }
+          ]
+        },
+        {
+          "uuid": "5381de23-dc05-42c9-9432-1a6c9182c545",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "When you call 311,  list each and every bad condition in your apartment and the common areas of the building. An inspector should come within a week. If no inspector comes, just call again! \n\nDo you want to learn about how to find the results online after the inspection?\n\nYou can say: \n\nYES to learn more or NO if you already how to find your results. \n\n ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "b90e8d95-d7a9-4abb-88c4-68ecd7c1b6cb"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "1e78e340-c3af-4963-9773-d9ed71988800",
+              "destination_uuid": "503206e8-3ea3-49f6-b23b-24a15aa46aff"
+            }
+          ]
+        },
+        {
+          "uuid": "5b90a765-b5ff-44a7-a1af-8d414512c585",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Rent stabilized and rent controlled tenants can have their rent frozen or reduced due to poor conditions in their apartment. Would you like to learn more about rent freezes and rent reductions?",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "649e8fe1-8480-4711-9ca6-83877eb73b17"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "cc1cb944-1014-49e3-b420-7e0ea1e89e14",
+              "destination_uuid": "f00ea313-1e5a-4ec8-a359-f769b4a4a2a5"
+            }
+          ]
+        },
+        {
+          "uuid": "421d1fab-3344-4f15-90bb-8e1f8617ec4c",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "2397bbc0-12b1-4e8e-9fe5-3f39782c9974",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "140ecd5a-0fec-47d8-9929-458b81dc3024",
+                "category_uuid": "98fe7289-03de-4969-a4b0-6854e714b6f5"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "f47055de-7543-411c-9425-9bc8d668ac1f",
+                "category_uuid": "efb39f40-d5a1-4d99-9770-b01f3c9e4dd3"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "98fe7289-03de-4969-a4b0-6854e714b6f5",
+                "name": "Yes",
+                "exit_uuid": "21c46a3c-67fe-45cd-a538-9dc78c2cc7bf"
+              },
+              {
+                "uuid": "efb39f40-d5a1-4d99-9770-b01f3c9e4dd3",
+                "name": "No",
+                "exit_uuid": "da6df6da-c974-4e97-a402-0e391a8d72c0"
+              },
+              {
+                "uuid": "2397bbc0-12b1-4e8e-9fe5-3f39782c9974",
+                "name": "Other",
+                "exit_uuid": "c7418637-4a51-427f-acb1-6f04f08ae9fb"
+              },
+              {
+                "uuid": "e3365d60-788f-4928-9af2-7fd670d8a0c6",
+                "name": "No Response",
+                "exit_uuid": "5c9d8aef-aab6-4661-874d-6bab7b0a4f1e"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg",
+              "timeout": {
+                "seconds": 60,
+                "category_uuid": "e3365d60-788f-4928-9af2-7fd670d8a0c6"
+              }
+            },
+            "result_name": "speak to lawyer"
+          },
+          "exits": [
+            {
+              "uuid": "21c46a3c-67fe-45cd-a538-9dc78c2cc7bf",
+              "destination_uuid": "a331b87b-0009-4add-a614-650857321396"
+            },
+            {
+              "uuid": "da6df6da-c974-4e97-a402-0e391a8d72c0",
+              "destination_uuid": "ec4745fa-c36d-43dd-b352-9c1835f6d9d7"
+            },
+            {
+              "uuid": "c7418637-4a51-427f-acb1-6f04f08ae9fb",
+              "destination_uuid": "a331b87b-0009-4add-a614-650857321396"
+            },
+            {
+              "uuid": "5c9d8aef-aab6-4661-874d-6bab7b0a4f1e",
+              "destination_uuid": "a331b87b-0009-4add-a614-650857321396"
+            }
+          ]
+        },
+        {
+          "uuid": "7c896d5e-e977-4239-9dea-27218308962e",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "0a74afe1-d406-4db1-8254-096dab328115",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "a19f8f2d-05de-45ba-8430-34401f29bc99",
+                "category_uuid": "a2081c3c-de84-4f01-baee-20753265eebc"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "d0fd9ad0-c23e-46fc-bb78-5d84e54a1e37",
+                "category_uuid": "0b2821b8-5dd3-4611-93ba-de1a798bdde8"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "a2081c3c-de84-4f01-baee-20753265eebc",
+                "name": "Yes",
+                "exit_uuid": "95ffdac8-c0a9-422b-b0d1-2a3e55f156b2"
+              },
+              {
+                "uuid": "0b2821b8-5dd3-4611-93ba-de1a798bdde8",
+                "name": "No",
+                "exit_uuid": "68ef43c7-4a3d-4f49-be84-65d1e563e179"
+              },
+              {
+                "uuid": "0a74afe1-d406-4db1-8254-096dab328115",
+                "name": "Other",
+                "exit_uuid": "060915d5-bc2f-4ab0-b0c8-58eaae5cc9fb"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Result"
+          },
+          "exits": [
+            {
+              "uuid": "95ffdac8-c0a9-422b-b0d1-2a3e55f156b2",
+              "destination_uuid": "90897dc0-550a-42aa-92e2-d417094e3f92"
+            },
+            {
+              "uuid": "68ef43c7-4a3d-4f49-be84-65d1e563e179"
+            },
+            {
+              "uuid": "060915d5-bc2f-4ab0-b0c8-58eaae5cc9fb",
+              "destination_uuid": "4831b82b-3b44-47bc-8b33-de75cea2ca55"
+            }
+          ]
+        },
+        {
+          "uuid": "57a2839f-ceb6-4cec-b785-af682b3ec0ac",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "dcd2ce4b-d50f-420c-97c9-450f9d5f9f9a",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "6660b9a7-db15-4569-8be0-67ccc49b0292",
+                "category_uuid": "66c251a9-9f8a-4b4a-b02f-3147bb073d64"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "8dda95ef-cb51-4334-a0ba-24c3c8d11e7f",
+                "category_uuid": "181de5a8-71bf-4b93-802e-4f4aabd1d2b4"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "66c251a9-9f8a-4b4a-b02f-3147bb073d64",
+                "name": "Yes",
+                "exit_uuid": "c3be9767-c355-49e0-a0ff-3e38f2a700df"
+              },
+              {
+                "uuid": "181de5a8-71bf-4b93-802e-4f4aabd1d2b4",
+                "name": "No",
+                "exit_uuid": "77100990-91dc-42cd-9090-1cefa961cb89"
+              },
+              {
+                "uuid": "dcd2ce4b-d50f-420c-97c9-450f9d5f9f9a",
+                "name": "Other",
+                "exit_uuid": "cbb48ebc-2976-47b2-b5f0-2da69350af9c"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Learn about HP Actions"
+          },
+          "exits": [
+            {
+              "uuid": "c3be9767-c355-49e0-a0ff-3e38f2a700df",
+              "destination_uuid": "5d7a2c96-aa97-418d-80a0-93b9d08f5d5a"
+            },
+            {
+              "uuid": "77100990-91dc-42cd-9090-1cefa961cb89",
+              "destination_uuid": "31ae3381-9edd-4cc1-884a-b42fd9beaae7"
+            },
+            {
+              "uuid": "cbb48ebc-2976-47b2-b5f0-2da69350af9c",
+              "destination_uuid": "5d7a2c96-aa97-418d-80a0-93b9d08f5d5a"
+            }
+          ]
+        },
+        {
+          "uuid": "f00ea313-1e5a-4ec8-a359-f769b4a4a2a5",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "f9db1d77-d4f2-4ebe-96c8-960fd78728e9",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "ee5fba8e-6489-4ff3-9499-7cdeba6b184a",
+                "category_uuid": "907a175b-6494-4871-abd7-b1e7692d7a0c"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "3823db0a-72eb-4724-aa49-570fcb924679",
+                "category_uuid": "d60189fe-f80a-4898-b2f2-c6539c7cc29d"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "907a175b-6494-4871-abd7-b1e7692d7a0c",
+                "name": "Yes",
+                "exit_uuid": "92374612-5b5f-42bc-87a7-6de32161ff46"
+              },
+              {
+                "uuid": "d60189fe-f80a-4898-b2f2-c6539c7cc29d",
+                "name": "No",
+                "exit_uuid": "93fcc90a-bce1-4c85-8f3a-974c7cd63e51"
+              },
+              {
+                "uuid": "f9db1d77-d4f2-4ebe-96c8-960fd78728e9",
+                "name": "Other",
+                "exit_uuid": "b0428882-2381-4598-9bd7-194e5e5cec77"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "learn about DHCR rent reductions"
+          },
+          "exits": [
+            {
+              "uuid": "92374612-5b5f-42bc-87a7-6de32161ff46",
+              "destination_uuid": "a4b6f142-8384-44ca-bb3f-fc5610b48b64"
+            },
+            {
+              "uuid": "93fcc90a-bce1-4c85-8f3a-974c7cd63e51",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "b0428882-2381-4598-9bd7-194e5e5cec77",
+              "destination_uuid": "a4b6f142-8384-44ca-bb3f-fc5610b48b64"
+            }
+          ]
+        },
+        {
+          "uuid": "503206e8-3ea3-49f6-b23b-24a15aa46aff",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "478bc8d4-7824-4bee-b5e4-ea31a79498ef",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "b7be6dfc-490f-4be3-873d-8ffbf481cbf9",
+                "category_uuid": "691c2c6c-11bb-4a8e-bf0d-c27425c12560"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "e17bb6cd-fb01-4e6f-ae21-f7b5000a1fe3",
+                "category_uuid": "54367f36-3924-4d2b-95ed-3b905e15c64c"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "691c2c6c-11bb-4a8e-bf0d-c27425c12560",
+                "name": "Yes",
+                "exit_uuid": "1df97efe-6f55-44bb-ba0f-fdc0224eceeb"
+              },
+              {
+                "uuid": "54367f36-3924-4d2b-95ed-3b905e15c64c",
+                "name": "No",
+                "exit_uuid": "6074b140-88b9-4816-927e-26dddfba272c"
+              },
+              {
+                "uuid": "478bc8d4-7824-4bee-b5e4-ea31a79498ef",
+                "name": "Other",
+                "exit_uuid": "67583b55-bb2c-4734-96ef-e2410de4c189"
+              },
+              {
+                "uuid": "9300d9e1-be8b-4db6-8a4f-1e4e38834578",
+                "name": "No Response",
+                "exit_uuid": "d9950ece-97cc-43c5-b142-439f16c80a94"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg",
+              "timeout": {
+                "seconds": 300,
+                "category_uuid": "9300d9e1-be8b-4db6-8a4f-1e4e38834578"
+              }
+            },
+            "result_name": "Find HPD violations online or go to LOC"
+          },
+          "exits": [
+            {
+              "uuid": "1df97efe-6f55-44bb-ba0f-fdc0224eceeb",
+              "destination_uuid": "cdac708a-4554-4536-8d59-cd1e85ae7bf4"
+            },
+            {
+              "uuid": "6074b140-88b9-4816-927e-26dddfba272c",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            },
+            {
+              "uuid": "67583b55-bb2c-4734-96ef-e2410de4c189",
+              "destination_uuid": "cdac708a-4554-4536-8d59-cd1e85ae7bf4"
+            },
+            {
+              "uuid": "d9950ece-97cc-43c5-b142-439f16c80a94"
+            }
+          ]
+        },
+        {
+          "uuid": "90897dc0-550a-42aa-92e2-d417094e3f92",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Look at your first and most recent lease. If it says you are rent stabilized, that's a good sign you are protected. Do you want to learn how to ask the State if your landlord has registered your apartment as rent stabilized? \n\nYou can say YES to order your State rent history or NO to keep learning about repairs.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "53dc1101-ec1b-45d4-89d7-4e4ded508457"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "bbee4bd6-7fcd-4f71-89f0-ee9a3a1ff4f1",
+              "destination_uuid": "9191c887-36cd-4c72-a745-10977b547b25"
+            }
+          ]
+        },
+        {
+          "uuid": "ec4745fa-c36d-43dd-b352-9c1835f6d9d7",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "That's okay! Not everyone wants to talk to lawyer. Would you like to hear about ways to figure out if you're rent stabilized yourself?  \n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "581212bc-2c1f-48cd-bb17-6bbf1486c5e1"
+            },
+            {
+              "attachments": [],
+              "text": "Type YES to learn more about whether you are rent stabilized or NO to continue to learn about ways to get repairs.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "bfb42ba6-200e-47f8-b284-300209367b7c"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "aa69ce84-4c49-483b-b9c9-bd97f3cae38c",
+              "destination_uuid": "bd3e09be-5218-476a-baa5-071da76fb0d7"
+            }
+          ]
+        },
+        {
+          "uuid": "5d7a2c96-aa97-418d-80a0-93b9d08f5d5a",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "You can sue NYCHA in housing court by filing a case called an HP Action. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "bbef6670-b4d0-41f6-b99c-3ebaec3fd24f"
+            },
+            {
+              "attachments": [],
+              "text": "HP Actions are lawsuits tenants file against their landlord in housing court to obtain repairs.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "e023b695-bca3-45ca-b143-c381d5241201"
+            },
+            {
+              "attachments": [],
+              "text": "Do you want to learn about how to start an HP Action?",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "36695bae-bc7c-451a-a3ae-0952fd320aa9"
+            },
+            {
+              "attachments": [],
+              "text": "You can say YES to learn more about HP Actions or NO to learn about other housing rights.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "07d94c4a-7a31-4ca5-8163-a89caf4b1bce"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "2878f7cf-1e16-4b3a-9f49-2cada8c71975",
+              "destination_uuid": "dd307628-be5c-44a1-a8ff-b9e82dc4be42"
+            }
+          ]
+        },
+        {
+          "uuid": "a331b87b-0009-4add-a614-650857321396",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Here are some legal non-profits in your neighborhood:",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "70f5134a-2ce0-4a1d-b700-d2fcb12a160c"
+            },
+            {
+              "attachments": [],
+              "text": "For Legal Aid, call 212-426-3000 or visit: https://www.legalservicesnyc.org/our-program/manhattan",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "a049b72c-6355-41b8-8bc4-cc66e6560e17"
+            },
+            {
+              "attachments": [],
+              "text": "For Legal Services, NYC, call 917-661-4500 between 9:30-4:00 pm, or visit: https://www.legalservicesnyc.org/our-program/manhattan",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "e76cac00-2ef2-47af-b356-78c99ac5ec6e"
+            },
+            {
+              "attachments": [],
+              "text": "You can also call 311 for legal referral!",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "40434f9d-44a6-4847-b635-2d20d48f0232"
+            },
+            {
+              "attachments": [],
+              "text": "While you wait to speak to a lawyer, would you like to learn more about getting repairs today? \n\nYou can say YES or NO",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "002d847f-632e-4291-a78f-f5f789daf1d7"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "bd133b9b-b049-4487-92fd-1475592c2cd1",
+              "destination_uuid": "69d21d1c-41b4-4fc1-be71-2327b59da454"
+            }
+          ]
+        },
+        {
+          "uuid": "cdac708a-4554-4536-8d59-cd1e85ae7bf4",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "A few days after the inspector visits your apartment, housing code violations will be posted on the HPD website. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "26e75a01-174e-4afb-ad13-50594becbf44"
+            },
+            {
+              "attachments": [],
+              "text": "Type your address into this website: https://www1.nyc.gov/site/hpd/about/hpd-online.page. Once your building information loads, look for the purple bar on the left side of the page and click, \"all open violations.\" ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "aa14b231-63f1-4857-89bf-5826f7362b51"
+            },
+            {
+              "attachments": [],
+              "text": "Are you ready to take learn about other ways to get repairs? \n\nYou can say: YES or NO",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "7e09ab53-b4bc-493d-b3b5-cdda83507b92"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "45d34f39-679b-495b-8440-51faacab6ea3",
+              "destination_uuid": "3ff13374-08b1-46c9-9db8-ddd8a07959a3"
+            }
+          ]
+        },
+        {
+          "uuid": "cc57c664-e066-49fe-8425-5761668b23a1",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "You can also file a lawsuit in housing court against your landlord for failure to make repairs. This kind of case is called an HP Action. Would you like to learn more about an HP Action?\n\nYou can say: YES or NO",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "a78d1ccd-c144-4a51-ba05-e1b910f73fd5"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "b46ce86f-d86d-4cce-9777-477950edb75e",
+              "destination_uuid": "1f2ac8bc-9cf0-42d9-9533-4738f9339319"
+            }
+          ]
+        },
+        {
+          "uuid": "9191c887-36cd-4c72-a745-10977b547b25",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "8d144a67-a800-4290-9198-50e6466accb6",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "1feef9d9-a148-4b51-8c56-c7efde38f6b2",
+                "category_uuid": "cb810b95-4ddb-40b9-b4c8-ddf272a62b45"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "e8405e54-f87b-427a-936f-1db5457b06d9",
+                "category_uuid": "9b84a3e3-b771-476e-8ae6-27c452faa8b1"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "cb810b95-4ddb-40b9-b4c8-ddf272a62b45",
+                "name": "Yes",
+                "exit_uuid": "c3395b60-3e42-4cb2-a661-360f05e48512"
+              },
+              {
+                "uuid": "9b84a3e3-b771-476e-8ae6-27c452faa8b1",
+                "name": "No",
+                "exit_uuid": "2615ec4e-c097-4ac1-b9c8-c11165defb6d"
+              },
+              {
+                "uuid": "8d144a67-a800-4290-9198-50e6466accb6",
+                "name": "Other",
+                "exit_uuid": "a45ffcd4-2445-4456-94d4-d92fb5ee89d8"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Enter DHCR flow or return to repairs"
+          },
+          "exits": [
+            {
+              "uuid": "c3395b60-3e42-4cb2-a661-360f05e48512",
+              "destination_uuid": "18346b94-3e1b-4e94-b79d-ef419c3ff2ab"
+            },
+            {
+              "uuid": "2615ec4e-c097-4ac1-b9c8-c11165defb6d"
+            },
+            {
+              "uuid": "a45ffcd4-2445-4456-94d4-d92fb5ee89d8",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "bd3e09be-5218-476a-baa5-071da76fb0d7",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "589cab14-9535-4c37-8de4-95b63a37bdff",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "c964c49e-0fc3-4966-8317-ab98c3ddee3e",
+                "category_uuid": "1d33afe6-bf74-4be1-a699-c6a0b4257b83"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "49e768a2-d6ab-41a5-bdec-0d9aecc2581e",
+                "category_uuid": "811b6743-1511-4ce1-b379-80c89c598076"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "1d33afe6-bf74-4be1-a699-c6a0b4257b83",
+                "name": "Yes",
+                "exit_uuid": "8bf91f72-d1f5-4c1d-ab30-9d0f6645dbc2"
+              },
+              {
+                "uuid": "811b6743-1511-4ce1-b379-80c89c598076",
+                "name": "No",
+                "exit_uuid": "38be833d-0485-4937-9820-e717519bff8b"
+              },
+              {
+                "uuid": "589cab14-9535-4c37-8de4-95b63a37bdff",
+                "name": "Other",
+                "exit_uuid": "90749631-33f0-4399-ab8e-a4e764c83651"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Take to HPD inspection or end flow"
+          },
+          "exits": [
+            {
+              "uuid": "8bf91f72-d1f5-4c1d-ab30-9d0f6645dbc2",
+              "destination_uuid": "293ea029-26d2-449b-a1cb-ee805802b287"
+            },
+            {
+              "uuid": "38be833d-0485-4937-9820-e717519bff8b",
+              "destination_uuid": "293ea029-26d2-449b-a1cb-ee805802b287"
+            },
+            {
+              "uuid": "90749631-33f0-4399-ab8e-a4e764c83651",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "18346b94-3e1b-4e94-b79d-ef419c3ff2ab",
+          "actions": [
+            {
+              "uuid": "e4fda3e0-6fd7-4b21-af7f-d858b4672ff8",
+              "type": "enter_flow",
+              "flow": {
+                "uuid": "367fb415-29bd-4d98-8e42-40cba0dc8a97",
+                "name": "DHCR flow"
+              }
+            }
+          ],
+          "router": {
+            "type": "switch",
+            "operand": "@child.run.status",
+            "cases": [
+              {
+                "uuid": "036554e5-8ac6-4a1a-a67f-f62ded04f453",
+                "type": "has_only_text",
+                "arguments": [
+                  "completed"
+                ],
+                "category_uuid": "0cffbbe1-1d00-4ec0-afbb-330d9fbba200"
+              },
+              {
+                "uuid": "bf616266-f8ff-4fdb-94c4-99240755383b",
+                "arguments": [
+                  "expired"
+                ],
+                "type": "has_only_text",
+                "category_uuid": "57eee50f-5cdb-48a6-93d5-d08bacc09346"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "0cffbbe1-1d00-4ec0-afbb-330d9fbba200",
+                "name": "Complete",
+                "exit_uuid": "8cb00c9c-3c15-426d-a2f4-005ad8ad5418"
+              },
+              {
+                "uuid": "57eee50f-5cdb-48a6-93d5-d08bacc09346",
+                "name": "Expired",
+                "exit_uuid": "e920da8d-ef9a-46c4-b4f2-ef91dcf63106"
+              }
+            ],
+            "default_category_uuid": "57eee50f-5cdb-48a6-93d5-d08bacc09346"
+          },
+          "exits": [
+            {
+              "uuid": "8cb00c9c-3c15-426d-a2f4-005ad8ad5418",
+              "destination_uuid": "eb27ce39-2f04-4fae-97c8-befdedb5ad29"
+            },
+            {
+              "uuid": "e920da8d-ef9a-46c4-b4f2-ef91dcf63106",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "dd307628-be5c-44a1-a8ff-b9e82dc4be42",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "142990d9-c9b7-4742-b4ef-e7106a5aaef0",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "73b4016b-01da-451d-80fe-58501cc91323",
+                "category_uuid": "235fad1c-f6e9-4a62-bbe9-c9ffe19d24d8"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "7564175e-34db-4e88-bf50-8a67a746dc21",
+                "category_uuid": "eb57d62b-97b4-47e5-9adf-ad57b2d07d2d"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "235fad1c-f6e9-4a62-bbe9-c9ffe19d24d8",
+                "name": "Yes",
+                "exit_uuid": "9d8fd328-7ca5-4739-a5de-dab5b7d02567"
+              },
+              {
+                "uuid": "eb57d62b-97b4-47e5-9adf-ad57b2d07d2d",
+                "name": "No",
+                "exit_uuid": "8b6a041d-0617-400b-b344-b9fd73a577da"
+              },
+              {
+                "uuid": "142990d9-c9b7-4742-b4ef-e7106a5aaef0",
+                "name": "Other",
+                "exit_uuid": "3cf38c70-fa1c-4284-bf77-6667b20f4e16"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Learn more about HP NYCHA"
+          },
+          "exits": [
+            {
+              "uuid": "9d8fd328-7ca5-4739-a5de-dab5b7d02567",
+              "destination_uuid": "53af1ba8-2b0f-4e30-918c-2294b050866d"
+            },
+            {
+              "uuid": "8b6a041d-0617-400b-b344-b9fd73a577da",
+              "destination_uuid": "31ae3381-9edd-4cc1-884a-b42fd9beaae7"
+            },
+            {
+              "uuid": "3cf38c70-fa1c-4284-bf77-6667b20f4e16",
+              "destination_uuid": "53af1ba8-2b0f-4e30-918c-2294b050866d"
+            }
+          ]
+        },
+        {
+          "uuid": "eb27ce39-2f04-4fae-97c8-befdedb5ad29",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Since your rent history will take a while to come, do you want to continue to learn about repairs?\n\nYou can write YES to learn about repairs or NO to learn about other your housing rights.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "4c4e3981-b85e-4169-8b55-ef8b11309976"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "485ec51a-0078-463c-b62b-3a6baf5f20ea",
+              "destination_uuid": "a0f67cee-3f47-4036-bbd1-ca0d484f2f2c"
+            }
+          ]
+        },
+        {
+          "uuid": "a4b6f142-8384-44ca-bb3f-fc5610b48b64",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "The Division of Homes and Community Renewal (\"DHCR\") can decide to freeze or reduce your rent for bad conditions.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "c62b64fe-b67f-40e1-a5bd-65da58c817c1"
+            },
+            {
+              "attachments": [],
+              "text": "DHCR is the agency that oversees rent stabilized and rent controlled apartments in New York State. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "5d671c0b-11dc-4cef-a7ef-e91d8db3d88f"
+            },
+            {
+              "attachments": [],
+              "text": "To learn how to file a complaint about your individual apartment type APARTMENT.\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "723aa78c-0716-4115-848c-151cbb17301c"
+            },
+            {
+              "attachments": [],
+              "text": "To learn how to file a complaint for the common areas in your apartment, type BUILDING.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "a7b3a972-a68c-4191-b2c3-c9cb1f59a87e"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "dc88263b-a16f-4f71-a401-437f92e7ea58",
+              "destination_uuid": "113b44d9-5e51-4fa2-b083-e903c89b96a1"
+            }
+          ]
+        },
+        {
+          "uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "If you are ready to take action against your landlord, you can use JustFix's letter of Complaint tool to write to letter to your landlord. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "f990a773-2756-4c8d-8cc5-22bc25268df8"
+            },
+            {
+              "attachments": [],
+              "text": "Click here to get started: https://app.justfix.nyc/en/loc/splash. JustFix will handle the printing and send it certified mail free of charge!",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "3f81c75c-26e0-4524-ab5e-1947c4e3351f"
+            },
+            {
+              "attachments": [],
+              "text": "Do you you want learn about how to sue your landlord for repairs? \n\nYou can say: YES to learn more lawsuits or NO to learn about other housing rights.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "ff3b1626-21c5-4a92-9158-b00877b7b3ea"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "32acf5b1-cef5-485c-9e48-ac19dc4b027a",
+              "destination_uuid": "a4a2e05f-37ca-43d4-bb0d-1db0b695ce41"
+            }
+          ]
+        },
+        {
+          "uuid": "53af1ba8-2b0f-4e30-918c-2294b050866d",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "To file an HP Action, you can go to Manhattan Housing Court at  111 Centre Street, New York, NY 10013. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "81eebca0-f853-48d0-9a91-293b645014d1"
+            },
+            {
+              "attachments": [],
+              "text": "The clerk can be reached at  646-386-5750. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "1a1ed711-f081-4479-ac19-8343a50ffa61"
+            },
+            {
+              "attachments": [],
+              "text": "For more information on filing an HP Action, visit: http://www.courts.state.ny.us/courts/nyc/housing/startinghp.shtml",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "f3e30824-7f37-407e-b1d3-bf4f32f36bcf"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "aedc43f4-87de-493d-adc8-3457424146d1",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "a0f67cee-3f47-4036-bbd1-ca0d484f2f2c",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "3e0044e2-93c6-47fa-aa16-c7070f3c3453",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "09ba2d7d-c004-467b-9fe5-26782b7579c9",
+                "category_uuid": "0677b9b5-b626-4feb-9f00-87a2fbd4f0a8"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "2fca4fec-c0bf-4cdf-a582-b623d85e7358",
+                "category_uuid": "ddd01f43-0ba7-4a0f-a084-a9c4b9f7cb94"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "0677b9b5-b626-4feb-9f00-87a2fbd4f0a8",
+                "name": "Yes",
+                "exit_uuid": "82046e1e-5210-4aac-b620-ac9c06ab505b"
+              },
+              {
+                "uuid": "ddd01f43-0ba7-4a0f-a084-a9c4b9f7cb94",
+                "name": "No",
+                "exit_uuid": "e30e2edf-6d82-43a2-a14f-cf3cd864c4fe"
+              },
+              {
+                "uuid": "3e0044e2-93c6-47fa-aa16-c7070f3c3453",
+                "name": "Other",
+                "exit_uuid": "2e64eb0b-1ce4-4f68-a1a8-5b9df64e5d85"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Learn about repairs after rent history or end flow"
+          },
+          "exits": [
+            {
+              "uuid": "82046e1e-5210-4aac-b620-ac9c06ab505b",
+              "destination_uuid": "293ea029-26d2-449b-a1cb-ee805802b287"
+            },
+            {
+              "uuid": "e30e2edf-6d82-43a2-a14f-cf3cd864c4fe"
+            },
+            {
+              "uuid": "2e64eb0b-1ce4-4f68-a1a8-5b9df64e5d85",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "4c91c4bb-a900-4c6d-81e8-3eca8d420165",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "To fill out a rent reduction for the common areas of your buildings like the entrance door, stairwells, elevator, or roof, visit: https://hcr.ny.gov/system/files/documents/2021/05/ra-84-fillable_0.pdf",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "d0ba5c67-09dd-4857-8a20-dff8014ce65b"
+            },
+            {
+              "attachments": [],
+              "text": "You can ask your neighbors to sign on as well since poor conditions in the common areas affects everyone!",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "8176dd8c-cd49-4b39-94be-255ebe13f9f7"
+            },
+            {
+              "attachments": [],
+              "text": "Do you also want to learn about making a complaint about your individual apartment?\n\nYou can say YES to learn more or NO to learn about a new housing topic. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "2e6abfeb-2453-441b-bd9c-c96950aeb384"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "dde834a7-aedf-4a85-96fd-28399482e60c",
+              "destination_uuid": "fe974cb0-af8a-4c25-80f9-57c205d32bb1"
+            }
+          ]
+        },
+        {
+          "uuid": "6acc33e8-bdcd-4041-9f4c-c228e1929df8",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "8e2bba99-5b8e-44aa-bc1c-57568d36b40a",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "f85d0575-1638-4745-a7b2-5138e30c56e7",
+                "category_uuid": "4a41101d-14bd-4357-afdf-a6ed8b24fbc7"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "050523fe-b246-40c2-8f00-c39bcfd8de5d",
+                "category_uuid": "3e7444f5-5ccb-4a98-b6b2-ead611a511f0"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "4a41101d-14bd-4357-afdf-a6ed8b24fbc7",
+                "name": "Yes",
+                "exit_uuid": "78a3662f-87d0-43bf-81f6-a930aea9e26e"
+              },
+              {
+                "uuid": "3e7444f5-5ccb-4a98-b6b2-ead611a511f0",
+                "name": "No",
+                "exit_uuid": "c6536d06-f458-45ae-8cec-a6c8cb8464d5"
+              },
+              {
+                "uuid": "8e2bba99-5b8e-44aa-bc1c-57568d36b40a",
+                "name": "Other",
+                "exit_uuid": "b91f15e0-385e-4e40-a95e-aa001ae74c18"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Reconsider HP Action"
+          },
+          "exits": [
+            {
+              "uuid": "78a3662f-87d0-43bf-81f6-a930aea9e26e",
+              "destination_uuid": "53af1ba8-2b0f-4e30-918c-2294b050866d"
+            },
+            {
+              "uuid": "c6536d06-f458-45ae-8cec-a6c8cb8464d5",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            },
+            {
+              "uuid": "b91f15e0-385e-4e40-a95e-aa001ae74c18",
+              "destination_uuid": "53af1ba8-2b0f-4e30-918c-2294b050866d"
+            }
+          ]
+        },
+        {
+          "uuid": "31ae3381-9edd-4cc1-884a-b42fd9beaae7",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Keep in mind that, the City will only send an independent inspector to an apartment or common area in NYCHA when you sue in housing court.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "4a0b7a90-1f1c-4956-b513-10c4c3bb0410"
+            },
+            {
+              "attachments": [],
+              "text": "If you have already complained several times, an HP action may be your only option. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "7d596cd6-abb9-4fe4-b54d-00fdcbe53cc5"
+            },
+            {
+              "attachments": [],
+              "text": "Do you want to reconsider filing an HP Action?\n\nYou can say: YES to learn how to file an HP or NO to lean about your other housing rights.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "0f4fc346-572c-42dc-bca4-3b7edfcbd652"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "861b1d44-af0e-4699-b28d-da3d9d93fe60",
+              "destination_uuid": "6acc33e8-bdcd-4041-9f4c-c228e1929df8"
+            }
+          ]
+        },
+        {
+          "uuid": "113b44d9-5e51-4fa2-b083-e903c89b96a1",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "2cc60e1a-19a3-4e2c-995b-237e9bc99f70",
+            "cases": [
+              {
+                "arguments": [
+                  "a"
+                ],
+                "type": "has_beginning",
+                "uuid": "923a21d9-4e25-4130-a61a-ed2ef0e1015f",
+                "category_uuid": "1a84f7d7-4fe8-44aa-9e39-1adbb865c374"
+              },
+              {
+                "arguments": [
+                  "b"
+                ],
+                "type": "has_beginning",
+                "uuid": "1375c842-bee9-4561-9226-86072d2a81c1",
+                "category_uuid": "99de65e1-93f3-496f-85b6-58a95882901a"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "1a84f7d7-4fe8-44aa-9e39-1adbb865c374",
+                "name": "Apartment",
+                "exit_uuid": "03491984-fcfc-4def-9a3e-30f25b8a59cd"
+              },
+              {
+                "uuid": "99de65e1-93f3-496f-85b6-58a95882901a",
+                "name": "Building",
+                "exit_uuid": "0c64f1b2-dc6f-4590-bbd0-e21b4d238b28"
+              },
+              {
+                "uuid": "2cc60e1a-19a3-4e2c-995b-237e9bc99f70",
+                "name": "Other",
+                "exit_uuid": "d7d13f77-3f8a-4b80-a8c1-744ba4b27029"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "DHCR building or apt"
+          },
+          "exits": [
+            {
+              "uuid": "03491984-fcfc-4def-9a3e-30f25b8a59cd",
+              "destination_uuid": "8ca3c2fa-078a-4d8a-97e8-f00fd602d3ca"
+            },
+            {
+              "uuid": "0c64f1b2-dc6f-4590-bbd0-e21b4d238b28",
+              "destination_uuid": "4c91c4bb-a900-4c6d-81e8-3eca8d420165"
+            },
+            {
+              "uuid": "d7d13f77-3f8a-4b80-a8c1-744ba4b27029",
+              "destination_uuid": "a4b6f142-8384-44ca-bb3f-fc5610b48b64"
+            }
+          ]
+        },
+        {
+          "uuid": "1f2ac8bc-9cf0-42d9-9533-4738f9339319",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "ed378136-ee84-4af2-9993-130337a6ecdc",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "c5fa3455-d176-41a0-bec3-6913805937de",
+                "category_uuid": "2384d830-748d-4a32-a5bb-e176323f11ff"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "7f0ee863-d33b-4c88-a144-2480342c0a8e",
+                "category_uuid": "6143096d-f11f-4b9b-83ac-1cade813d755"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "2384d830-748d-4a32-a5bb-e176323f11ff",
+                "name": "Yes",
+                "exit_uuid": "c83d0151-8447-428d-8ed8-5cb01e4f6a28"
+              },
+              {
+                "uuid": "6143096d-f11f-4b9b-83ac-1cade813d755",
+                "name": "No",
+                "exit_uuid": "17443bc8-f563-423e-acb5-0877a334a609"
+              },
+              {
+                "uuid": "ed378136-ee84-4af2-9993-130337a6ecdc",
+                "name": "Other",
+                "exit_uuid": "51365254-e192-4864-a500-4b189dc8da1b"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Learn more about HP private or end flow"
+          },
+          "exits": [
+            {
+              "uuid": "c83d0151-8447-428d-8ed8-5cb01e4f6a28",
+              "destination_uuid": "4ddefdef-a7e5-4970-8529-30d18e82706b"
+            },
+            {
+              "uuid": "17443bc8-f563-423e-acb5-0877a334a609",
+              "destination_uuid": "c4c03a01-4bf5-46ae-89fa-3f8ae3c1ad3f"
+            },
+            {
+              "uuid": "51365254-e192-4864-a500-4b189dc8da1b",
+              "destination_uuid": "4ddefdef-a7e5-4970-8529-30d18e82706b"
+            }
+          ]
+        },
+        {
+          "uuid": "3ff13374-08b1-46c9-9db8-ddd8a07959a3",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "801878ff-2729-4350-b123-78821c43de94",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "5ae912b3-7c4f-4cf2-8aba-946b1fe705b5",
+                "category_uuid": "ab6b22dd-7119-4786-b42a-98f390e25e29"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "49130f6f-66a6-4712-b465-160b9fb38ac4",
+                "category_uuid": "586944d3-d61d-4d48-8970-599217531f6f"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "ab6b22dd-7119-4786-b42a-98f390e25e29",
+                "name": "Yes",
+                "exit_uuid": "da0a8ee2-5bb4-47c8-9d8e-7b0c2553155d"
+              },
+              {
+                "uuid": "586944d3-d61d-4d48-8970-599217531f6f",
+                "name": "No",
+                "exit_uuid": "cbb8f3d9-8869-461f-88f7-bb16f1b08fd8"
+              },
+              {
+                "uuid": "801878ff-2729-4350-b123-78821c43de94",
+                "name": "Other",
+                "exit_uuid": "cdd92aeb-c090-4a64-a6df-cd50b648d74c"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Take to LOC or end flow"
+          },
+          "exits": [
+            {
+              "uuid": "da0a8ee2-5bb4-47c8-9d8e-7b0c2553155d",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            },
+            {
+              "uuid": "cbb8f3d9-8869-461f-88f7-bb16f1b08fd8",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "cdd92aeb-c090-4a64-a6df-cd50b648d74c",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            }
+          ]
+        },
+        {
+          "uuid": "851a9e6d-6564-49bd-b41b-a55813014943",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "2d33230d-3ccd-4442-96d5-6bff0ed7c94d",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "2a5a4ef6-83a4-46b0-bd50-c1c0f718b461",
+                "category_uuid": "656eb984-c318-41f1-8257-f324b6106374"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "38893cf0-7a58-4d62-af87-2c50e45c6891",
+                "category_uuid": "743bc32b-419e-4cf5-bbf0-ccfecf991502"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "656eb984-c318-41f1-8257-f324b6106374",
+                "name": "Yes",
+                "exit_uuid": "d67c2b1f-a8c3-4b1a-b671-e32cf1ad33e5"
+              },
+              {
+                "uuid": "743bc32b-419e-4cf5-bbf0-ccfecf991502",
+                "name": "No",
+                "exit_uuid": "12f907ee-d551-425c-bd4d-501ad90704ae"
+              },
+              {
+                "uuid": "2d33230d-3ccd-4442-96d5-6bff0ed7c94d",
+                "name": "Other",
+                "exit_uuid": "9609fd71-14b6-4e19-8428-439e0c2227f4"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "learn more about hp NYCHA"
+          },
+          "exits": [
+            {
+              "uuid": "d67c2b1f-a8c3-4b1a-b671-e32cf1ad33e5",
+              "destination_uuid": "cc57c664-e066-49fe-8425-5761668b23a1"
+            },
+            {
+              "uuid": "12f907ee-d551-425c-bd4d-501ad90704ae",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "9609fd71-14b6-4e19-8428-439e0c2227f4",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            }
+          ]
+        },
+        {
+          "uuid": "a4a2e05f-37ca-43d4-bb0d-1db0b695ce41",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "0ce8fa3f-d93f-4416-948e-abff4c0b9a71",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "a1a981a6-b131-402e-abdc-93c9f900d316",
+                "category_uuid": "0f7b5ceb-4afb-4cfc-b50d-87abbd2b3a7e"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "8042d302-1f6e-49e9-b1f7-c37145e332df",
+                "category_uuid": "fa84be8d-cd0a-471e-b717-a183240f8986"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "0f7b5ceb-4afb-4cfc-b50d-87abbd2b3a7e",
+                "name": "Yes",
+                "exit_uuid": "be456657-3342-4e6e-a67e-57bd6e47414e"
+              },
+              {
+                "uuid": "fa84be8d-cd0a-471e-b717-a183240f8986",
+                "name": "No",
+                "exit_uuid": "2de5eb5b-a734-4ba0-a7f3-2314699e484d"
+              },
+              {
+                "uuid": "0ce8fa3f-d93f-4416-948e-abff4c0b9a71",
+                "name": "Other",
+                "exit_uuid": "ae7e4704-7040-4c17-ae7d-48caa0d83d47"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Learn about HP or end flow"
+          },
+          "exits": [
+            {
+              "uuid": "be456657-3342-4e6e-a67e-57bd6e47414e",
+              "destination_uuid": "cc57c664-e066-49fe-8425-5761668b23a1"
+            },
+            {
+              "uuid": "2de5eb5b-a734-4ba0-a7f3-2314699e484d",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "ae7e4704-7040-4c17-ae7d-48caa0d83d47",
+              "destination_uuid": "4ddefdef-a7e5-4970-8529-30d18e82706b"
+            }
+          ]
+        },
+        {
+          "uuid": "ee28ddfc-39c1-4bc7-add0-6a77eaf619b8",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "5c467afe-0cad-4c57-a038-dbb643c7e517",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "7fdeaad7-f405-493f-8cfa-103eb970a288",
+                "category_uuid": "8f605063-5d84-4173-827a-75ee56af27d2"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "d43a30f2-3803-4855-8083-ac061dd25d01",
+                "category_uuid": "25d42f23-447a-40d5-bcbe-f7426c18a308"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "8f605063-5d84-4173-827a-75ee56af27d2",
+                "name": "Yes",
+                "exit_uuid": "9382866a-fc80-4341-a5ed-f11f51e84c6d"
+              },
+              {
+                "uuid": "25d42f23-447a-40d5-bcbe-f7426c18a308",
+                "name": "No",
+                "exit_uuid": "736500a5-7ee4-48db-932e-43af4baf16cf"
+              },
+              {
+                "uuid": "5c467afe-0cad-4c57-a038-dbb643c7e517",
+                "name": "Other",
+                "exit_uuid": "98d08120-4e52-4f98-82cb-574c31e3a0ca"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            }
+          },
+          "exits": [
+            {
+              "uuid": "9382866a-fc80-4341-a5ed-f11f51e84c6d",
+              "destination_uuid": "13be28c7-5252-4f93-989c-58d45c8d7d4f"
+            },
+            {
+              "uuid": "736500a5-7ee4-48db-932e-43af4baf16cf"
+            },
+            {
+              "uuid": "98d08120-4e52-4f98-82cb-574c31e3a0ca",
+              "destination_uuid": "8ca3c2fa-078a-4d8a-97e8-f00fd602d3ca"
+            }
+          ]
+        },
+        {
+          "uuid": "4ddefdef-a7e5-4970-8529-30d18e82706b",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "To file an HP Action, you can go to Manhattan Housing Court at  111 Centre Street, New York, NY 10013. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "e7434f8f-35f2-4c8e-830e-c099f10668eb"
+            },
+            {
+              "attachments": [],
+              "text": "The clerk can be reached at  646-386-5750. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "12cf0474-1393-4da3-a33c-b62aa2faaee4"
+            },
+            {
+              "attachments": [],
+              "text": "For more information on filing an HP Action, visit: http://www.courts.state.ny.us/courts/nyc/housing/startinghp.shtml\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "52dd4133-bfb7-4235-9376-f1df7372ab97"
+            },
+            {
+              "attachments": [],
+              "text": "Did you know that rent stabilized and rent controlled tenants can apply to have their rent reduced or frozen due to bad conditions in their buildings and apartments?\n\nYou can say: YES to lean more or NO to learn about other housing topics.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "63c91fb6-fb90-48af-8a77-fdee794604e4"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "ccffc5e2-4868-4cb7-831b-9f36dcb09ba9",
+              "destination_uuid": "59bc740c-734d-4244-b472-bb4d058b0df8"
+            }
+          ]
+        },
+        {
+          "uuid": "2dfc63e4-1167-4569-a591-413b36f5da0a",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "To fill out a rent reduction with DHCR for your INDIVIDUAL APARTMENT, visit: https://hcr.ny.gov/system/files/documents/2021/05/ra-81-fillable_0.pdf",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "1a86f371-f5fc-4959-870a-82d00b41e57f"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "9c91492d-7f17-4456-a4d0-1a70249e4f95",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "59bc740c-734d-4244-b472-bb4d058b0df8",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "ec20d0e7-926a-422e-b506-4ae14a245a27",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "ede4a687-c8f8-47be-afae-93794a0e4678",
+                "category_uuid": "6a4023b6-3c91-4a06-b4ea-319af5fad043"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "63a2aab8-15ea-49de-90ae-e674ef8403d5",
+                "category_uuid": "dfb0b65b-a59d-42ad-afaf-913a3b0aacf4"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "6a4023b6-3c91-4a06-b4ea-319af5fad043",
+                "name": "Yes",
+                "exit_uuid": "f1c7593b-66a0-4202-bb0e-dcd61262431b"
+              },
+              {
+                "uuid": "dfb0b65b-a59d-42ad-afaf-913a3b0aacf4",
+                "name": "No",
+                "exit_uuid": "5789ced3-b79a-494f-b4fe-f59e1864eed0"
+              },
+              {
+                "uuid": "ec20d0e7-926a-422e-b506-4ae14a245a27",
+                "name": "Other",
+                "exit_uuid": "394d376b-4c20-49d1-8b38-d84065cb020b"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Want to learn about DHCR"
+          },
+          "exits": [
+            {
+              "uuid": "f1c7593b-66a0-4202-bb0e-dcd61262431b",
+              "destination_uuid": "5b90a765-b5ff-44a7-a1af-8d414512c585"
+            },
+            {
+              "uuid": "5789ced3-b79a-494f-b4fe-f59e1864eed0",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "394d376b-4c20-49d1-8b38-d84065cb020b",
+              "destination_uuid": "5b90a765-b5ff-44a7-a1af-8d414512c585"
+            }
+          ]
+        },
+        {
+          "uuid": "372341cb-9535-4bd9-9a37-f3a4b49a83d5",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "aefec6eb-9c17-4497-bb9a-b0c42992db6b",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_any_word",
+                "uuid": "c8c23480-1ed8-47ff-9309-311bf391b552",
+                "category_uuid": "acf5331a-be5d-44b8-947e-8dba10de43f3"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_any_word",
+                "uuid": "32a510b2-5345-4c59-86cb-ec0c99580610",
+                "category_uuid": "429ae98f-0819-4f67-929d-d34a6edd290c"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "acf5331a-be5d-44b8-947e-8dba10de43f3",
+                "name": "Yes",
+                "exit_uuid": "182d7185-74d9-4379-87f7-acf15edca41c"
+              },
+              {
+                "uuid": "429ae98f-0819-4f67-929d-d34a6edd290c",
+                "name": "No",
+                "exit_uuid": "172a490b-7ced-4c10-9e98-4ef82d07a263"
+              },
+              {
+                "uuid": "aefec6eb-9c17-4497-bb9a-b0c42992db6b",
+                "name": "Other",
+                "exit_uuid": "c59ce624-d0bf-4c15-a427-474d7cb0e103"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Ready for LOC Private"
+          },
+          "exits": [
+            {
+              "uuid": "182d7185-74d9-4379-87f7-acf15edca41c",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            },
+            {
+              "uuid": "172a490b-7ced-4c10-9e98-4ef82d07a263",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "c59ce624-d0bf-4c15-a427-474d7cb0e103",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            }
+          ]
+        },
+        {
+          "uuid": "13be28c7-5252-4f93-989c-58d45c8d7d4f",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "To fill out a rent reduction for the COMMON AREAS of your buildings like the entrance door, stairwells, elevator, or roof, visit: https://hcr.ny.gov/system/files/documents/2021/05/ra-84-fillable_0.pdf\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "7075e262-11fd-4384-8a9a-0e6ac298d01a"
+            },
+            {
+              "attachments": [],
+              "text": "You can ask your neighbors to sign on as well! There's power in group action!\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "582ddb2e-43ea-4411-9e8e-75c4c57730b0"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "7d104c16-452f-4a16-9194-f73069f96e93",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "fe974cb0-af8a-4c25-80f9-57c205d32bb1",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "ed49aa39-d337-4a2f-bc25-3dfa8734f127",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "9598b478-08f1-4b06-8e3b-6c46d840e2e7",
+                "category_uuid": "db52dbee-825d-4fc6-a56e-504fee89c0da"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "b527c655-6573-4af9-bac6-febb1255aa22",
+                "category_uuid": "22f9cfc7-c246-469f-bf4f-574ed7d9d3fc"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "db52dbee-825d-4fc6-a56e-504fee89c0da",
+                "name": "Yes",
+                "exit_uuid": "379380a4-9f81-4c3d-a6c0-370c852b5929"
+              },
+              {
+                "uuid": "22f9cfc7-c246-469f-bf4f-574ed7d9d3fc",
+                "name": "No",
+                "exit_uuid": "41bce03d-98d5-43f8-87d3-d3f076629a94"
+              },
+              {
+                "uuid": "ed49aa39-d337-4a2f-bc25-3dfa8734f127",
+                "name": "Other",
+                "exit_uuid": "4a65c197-168e-4b60-9869-09bbb48a4c5e"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            }
+          },
+          "exits": [
+            {
+              "uuid": "379380a4-9f81-4c3d-a6c0-370c852b5929",
+              "destination_uuid": "2dfc63e4-1167-4569-a591-413b36f5da0a"
+            },
+            {
+              "uuid": "41bce03d-98d5-43f8-87d3-d3f076629a94",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "4a65c197-168e-4b60-9869-09bbb48a4c5e",
+              "destination_uuid": "4c91c4bb-a900-4c6d-81e8-3eca8d420165"
+            }
+          ]
+        },
+        {
+          "uuid": "8ca3c2fa-078a-4d8a-97e8-f00fd602d3ca",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "To fill out a rent reduction with DHCR for your apartment, visit: https://hcr.ny.gov/system/files/documents/2021/05/ra-81-fillable_0.pdf\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "bada20e1-5b8a-4c6e-88b5-201dbc2a639d"
+            },
+            {
+              "attachments": [],
+              "text": "Do you also want to learn about making complaints about the common areas in your building (as opposed to your own apartment)?\n\nYou can say YES to learn more or NO to learn about a new housing topic.\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "ae589631-2ce5-4790-8422-f8651779a08b"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "bc6c431d-144a-4ba2-af79-1d5b929859b8",
+              "destination_uuid": "ee28ddfc-39c1-4bc7-add0-6a77eaf619b8"
+            }
+          ]
+        },
+        {
+          "uuid": "c4c03a01-4bf5-46ae-89fa-3f8ae3c1ad3f",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "That's okay! Not everyone wants to file a lawsuit against their landlord.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "9ca0f329-f807-4c5c-b2ad-5bdf739fc5f7"
+            },
+            {
+              "attachments": [],
+              "text": "If you are rent stabilized or rent controlled, as another option, you can ask the State to freeze or decrease your rent due to bad conditions. ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "1f9efbfa-9282-42a4-a7e6-14900ed109d4"
+            },
+            {
+              "attachments": [],
+              "text": "Do you want to learn more about rent reductions?\n\nYou can say: YES to learn more about rent reductions or NO to learn about another housing topic.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "7043d117-12ac-4901-add6-b787cca5d068"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "9cbdf73f-1d70-4e42-b01c-66306b65bac7",
+              "destination_uuid": "52a64f60-13bc-4f86-9fac-3d60ee0afd41"
+            }
+          ]
+        },
+        {
+          "uuid": "69d21d1c-41b4-4fc1-be71-2327b59da454",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "36e16e08-0302-44e2-b63d-85961d0a009e",
+            "cases": [
+              {
+                "arguments": [
+                  "y"
+                ],
+                "type": "has_beginning",
+                "uuid": "1dbdcfb8-3e56-42d5-888a-e85e19a39c83",
+                "category_uuid": "3cf9b9da-5e3e-426a-92c0-5af52e621950"
+              },
+              {
+                "arguments": [
+                  "n"
+                ],
+                "type": "has_beginning",
+                "uuid": "73044dac-1caf-47fd-ac95-acfea60152b8",
+                "category_uuid": "d180ec17-73de-4589-89b4-7be99c0b2682"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "3cf9b9da-5e3e-426a-92c0-5af52e621950",
+                "name": "Yes",
+                "exit_uuid": "c9c1a66e-927a-4a0a-a37d-8cae6b01219e"
+              },
+              {
+                "uuid": "d180ec17-73de-4589-89b4-7be99c0b2682",
+                "name": "No",
+                "exit_uuid": "4887ecac-d48a-4b73-9878-9bd0697c452b"
+              },
+              {
+                "uuid": "36e16e08-0302-44e2-b63d-85961d0a009e",
+                "name": "Other",
+                "exit_uuid": "f7ba71d5-f790-4c16-9ab9-f4759af5239d"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            }
+          },
+          "exits": [
+            {
+              "uuid": "c9c1a66e-927a-4a0a-a37d-8cae6b01219e",
+              "destination_uuid": "293ea029-26d2-449b-a1cb-ee805802b287"
+            },
+            {
+              "uuid": "4887ecac-d48a-4b73-9878-9bd0697c452b",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "f7ba71d5-f790-4c16-9ab9-f4759af5239d",
+              "destination_uuid": "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c"
+            }
+          ]
+        },
+        {
+          "uuid": "52a64f60-13bc-4f86-9fac-3d60ee0afd41",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "c3d0544b-fdf5-46a6-9c0d-2ea8bebb8b21",
+            "cases": [
+              {
+                "arguments": [
+                  "Y"
+                ],
+                "type": "has_beginning",
+                "uuid": "804e8f77-c1c1-4d2f-b48d-2b136935ba57",
+                "category_uuid": "18615992-07f7-49f7-944e-c9ba26f8d709"
+              },
+              {
+                "arguments": [
+                  "N"
+                ],
+                "type": "has_beginning",
+                "uuid": "0dd754c2-2d9b-4257-9fb4-558c7d0f166b",
+                "category_uuid": "5e8eb9bd-2876-4c41-ad8f-be1c3480be8f"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "18615992-07f7-49f7-944e-c9ba26f8d709",
+                "name": "Yes",
+                "exit_uuid": "e80f8d2e-3678-488d-b3ee-20e4695f5ed6"
+              },
+              {
+                "uuid": "5e8eb9bd-2876-4c41-ad8f-be1c3480be8f",
+                "name": "No",
+                "exit_uuid": "b5f45c99-36c6-4fd3-8148-18aac54c0166"
+              },
+              {
+                "uuid": "c3d0544b-fdf5-46a6-9c0d-2ea8bebb8b21",
+                "name": "Other",
+                "exit_uuid": "481516dc-dfbf-4e72-b159-6702f20bc7ad"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Learn about rent reductions"
+          },
+          "exits": [
+            {
+              "uuid": "e80f8d2e-3678-488d-b3ee-20e4695f5ed6",
+              "destination_uuid": "a4b6f142-8384-44ca-bb3f-fc5610b48b64"
+            },
+            {
+              "uuid": "b5f45c99-36c6-4fd3-8148-18aac54c0166",
+              "destination_uuid": null
+            },
+            {
+              "uuid": "481516dc-dfbf-4e72-b159-6702f20bc7ad",
+              "destination_uuid": "a4b6f142-8384-44ca-bb3f-fc5610b48b64"
+            }
+          ]
+        }
+      ],
+      "_ui": {
+        "nodes": {
+          "444202c9-fa93-49f5-b149-e48fe3dbe884": {
+            "position": {
+              "left": 280,
+              "top": 0
+            },
+            "type": "execute_actions"
+          },
+          "e94c4b92-6870-49c4-9476-9b4a5ddd8831": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 240,
+              "top": 300
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "65349ded-3fa2-4baa-ace9-67e796a97289": {
+            "position": {
+              "left": 60,
+              "top": 420
+            },
+            "type": "execute_actions"
+          },
+          "c243019c-72a7-41f5-a6e9-7d64773310f0": {
+            "position": {
+              "left": 320,
+              "top": 440
+            },
+            "type": "execute_actions"
+          },
+          "1102d4f8-519d-4f13-9aea-84248b27cc54": {
+            "type": "split_by_subflow",
+            "position": {
+              "left": 740,
+              "top": 700
+            },
+            "config": {}
+          },
+          "66ca669e-e1f2-40b0-8fd1-69971a7e1297": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 300,
+              "top": 740
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "abb3b42c-fbb9-458e-affa-4948131b7033": {
+            "type": "split_by_expression",
+            "position": {
+              "left": 800,
+              "top": 860
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "293ea029-26d2-449b-a1cb-ee805802b287": {
+            "position": {
+              "left": 300,
+              "top": 920
+            },
+            "type": "execute_actions"
+          },
+          "aedb06e6-bd86-49c2-bde0-5fb5b9c5ced3": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 40,
+              "top": 960
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "3eeb5483-87d0-471b-bb60-55e42307ddbe": {
+            "type": "split_by_expression",
+            "position": {
+              "left": 760,
+              "top": 960
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "4831b82b-3b44-47bc-8b33-de75cea2ca55": {
+            "position": {
+              "left": 1120,
+              "top": 1160
+            },
+            "type": "execute_actions"
+          },
+          "6d7101da-e1dd-4e99-a037-6294e7da8740": {
+            "position": {
+              "left": 840,
+              "top": 1200
+            },
+            "type": "execute_actions"
+          },
+          "f77fea71-45e7-44cd-8d74-5a93d033ae14": {
+            "position": {
+              "left": 40,
+              "top": 1320
+            },
+            "type": "execute_actions"
+          },
+          "695c6ac1-4577-45b6-9352-b4329c834636": {
+            "position": {
+              "left": 1420,
+              "top": 1393
+            },
+            "type": "execute_actions"
+          },
+          "127c3419-3772-4e67-b3fe-18dffc5d4855": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 340,
+              "top": 1440
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "5381de23-dc05-42c9-9432-1a6c9182c545": {
+            "position": {
+              "left": 300,
+              "top": 1580
+            },
+            "type": "execute_actions"
+          },
+          "5b90a765-b5ff-44a7-a1af-8d414512c585": {
+            "position": {
+              "left": 780,
+              "top": 1620
+            },
+            "type": "execute_actions"
+          },
+          "7c896d5e-e977-4239-9dea-27218308962e": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 1420,
+              "top": 1860
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "421d1fab-3344-4f15-90bb-8e1f8617ec4c": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 1060,
+              "top": 1760
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "f00ea313-1e5a-4ec8-a359-f769b4a4a2a5": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 680,
+              "top": 1980
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "57a2839f-ceb6-4cec-b785-af682b3ec0ac": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 20,
+              "top": 1960
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "90897dc0-550a-42aa-92e2-d417094e3f92": {
+            "position": {
+              "left": 1580,
+              "top": 2020
+            },
+            "type": "execute_actions"
+          },
+          "503206e8-3ea3-49f6-b23b-24a15aa46aff": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 340,
+              "top": 2020
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "ec4745fa-c36d-43dd-b352-9c1835f6d9d7": {
+            "position": {
+              "left": 1280,
+              "top": 2040
+            },
+            "type": "execute_actions"
+          },
+          "5d7a2c96-aa97-418d-80a0-93b9d08f5d5a": {
+            "position": {
+              "left": 20,
+              "top": 2140
+            },
+            "type": "execute_actions"
+          },
+          "a331b87b-0009-4add-a614-650857321396": {
+            "position": {
+              "left": 940,
+              "top": 2160
+            },
+            "type": "execute_actions"
+          },
+          "cdac708a-4554-4536-8d59-cd1e85ae7bf4": {
+            "position": {
+              "left": 360,
+              "top": 2180
+            },
+            "type": "execute_actions"
+          },
+          "9191c887-36cd-4c72-a745-10977b547b25": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 1660,
+              "top": 2340
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "cc57c664-e066-49fe-8425-5761668b23a1": {
+            "position": {
+              "left": 700,
+              "top": 2320
+            },
+            "type": "execute_actions"
+          },
+          "bd3e09be-5218-476a-baa5-071da76fb0d7": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 1360,
+              "top": 2460
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "18346b94-3e1b-4e94-b79d-ef419c3ff2ab": {
+            "type": "split_by_subflow",
+            "position": {
+              "left": 1680,
+              "top": 2480
+            },
+            "config": {}
+          },
+          "dd307628-be5c-44a1-a8ff-b9e82dc4be42": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 0,
+              "top": 2660
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "eb27ce39-2f04-4fae-97c8-befdedb5ad29": {
+            "position": {
+              "left": 1560,
+              "top": 2660
+            },
+            "type": "execute_actions"
+          },
+          "a4b6f142-8384-44ca-bb3f-fc5610b48b64": {
+            "position": {
+              "left": 720,
+              "top": 2720
+            },
+            "type": "execute_actions"
+          },
+          "80362c1e-ae76-416e-b57c-e9dd0e2fcb4c": {
+            "position": {
+              "left": 300,
+              "top": 2780
+            },
+            "type": "execute_actions"
+          },
+          "53af1ba8-2b0f-4e30-918c-2294b050866d": {
+            "position": {
+              "left": 40,
+              "top": 2800
+            },
+            "type": "execute_actions"
+          },
+          "a0f67cee-3f47-4036-bbd1-ca0d484f2f2c": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 1540,
+              "top": 2920
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "4c91c4bb-a900-4c6d-81e8-3eca8d420165": {
+            "position": {
+              "left": 1000,
+              "top": 3180
+            },
+            "type": "execute_actions"
+          },
+          "6acc33e8-bdcd-4041-9f4c-c228e1929df8": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 20,
+              "top": 3260
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "31ae3381-9edd-4cc1-884a-b42fd9beaae7": {
+            "position": {
+              "left": 260,
+              "top": 3300
+            },
+            "type": "execute_actions"
+          },
+          "113b44d9-5e51-4fa2-b083-e903c89b96a1": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 700,
+              "top": 3300
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "1f2ac8bc-9cf0-42d9-9533-4738f9339319": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 0,
+              "top": 3760
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "3ff13374-08b1-46c9-9db8-ddd8a07959a3": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 640,
+              "top": 3820
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "851a9e6d-6564-49bd-b41b-a55813014943": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 380,
+              "top": 3880
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "a4a2e05f-37ca-43d4-bb0d-1db0b695ce41": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 0,
+              "top": 3920
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "ee28ddfc-39c1-4bc7-add0-6a77eaf619b8": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 820,
+              "top": 3980
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "4ddefdef-a7e5-4970-8529-30d18e82706b": {
+            "position": {
+              "left": 380,
+              "top": 4040
+            },
+            "type": "execute_actions"
+          },
+          "2dfc63e4-1167-4569-a591-413b36f5da0a": {
+            "position": {
+              "left": 720,
+              "top": 4160
+            },
+            "type": "execute_actions"
+          },
+          "59bc740c-734d-4244-b472-bb4d058b0df8": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 120,
+              "top": 4300
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "372341cb-9535-4bd9-9a37-f3a4b49a83d5": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 880,
+              "top": 4600
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "13be28c7-5252-4f93-989c-58d45c8d7d4f": {
+            "position": {
+              "left": 700,
+              "top": 4780
+            },
+            "type": "execute_actions"
+          },
+          "fe974cb0-af8a-4c25-80f9-57c205d32bb1": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 980,
+              "top": 4780
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "8ca3c2fa-078a-4d8a-97e8-f00fd602d3ca": {
+            "position": {
+              "left": 1120,
+              "top": 4900
+            },
+            "type": "execute_actions"
+          },
+          "c4c03a01-4bf5-46ae-89fa-3f8ae3c1ad3f": {
+            "position": {
+              "left": 500,
+              "top": 5320
+            },
+            "type": "execute_actions"
+          },
+          "69d21d1c-41b4-4fc1-be71-2327b59da454": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 900,
+              "top": 5480
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "52a64f60-13bc-4f86-9fac-3d60ee0afd41": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 560,
+              "top": 5800
+            },
+            "config": {
+              "cases": {}
+            }
+          }
+        },
+        "stickies": {
+          "2c072dd3-36e5-4519-b6e1-7473e93df266": {
+            "position": {
+              "left": 620,
+              "top": 0,
+              "right": null,
+              "bottom": null
+            },
+            "title": "TODO: Support \"goodbye\"",
+            "body": "Currently this flow doesn't support the \"goodbye\" keyword.\n\nNote also that if the user says \"STOP\" the message will actually be intercepted by Twilio, not the chatbot, and Twilio will prevent the bot from communicating with the user until they reply with \"START\". For more details see: https://support.twilio.com/hc/en-us/articles/223134027-Twilio-support-for-opt-out-keywords-SMS-STOP-filtering-\n\nIf this turns out to be hard, for now we may just want to avoid suggesting that the user can type \"goodbye\" at any point.",
+            "color": "yellow"
+          },
+          "79a1cd5d-1767-49ec-97d8-827869aba9f6": {
+            "position": {
+              "left": 840,
+              "top": 0,
+              "right": 80,
+              "bottom": -100
+            },
+            "title": "TODO: Handle confusing input better",
+            "body": "Right now, if the user says something that isn't an understood response (e.g. replying to a yes/no question with \"boop\") we just repeat the question without mentioning that we didn't understand what the user said. It would be nice to do something more user-friendly.",
+            "color": "yellow"
+          },
+          "6a4a3124-f251-4da6-aa78-68cbd5dfbf3e": {
+            "position": {
+              "left": 20,
+              "top": 0
+            },
+            "title": "This flow is based on a google diagram",
+            "body": "To compare it with the original diagram, see: https://docs.google.com/drawings/d/1iEzkYXfe6-vezgYlIc6ouyeSEn0D0NOIARhrSmA9HiE/edit",
+            "color": "yellow"
+          },
+          "85584080-d83f-45cc-b1ee-bb374eca6d55": {
+            "position": {
+              "left": 840,
+              "top": 1840,
+              "right": 0,
+              "bottom": 140
+            },
+            "title": "New Note",
+            "body": "TODO: Figure out why no Yes or No pops up betwen HP Action",
+            "color": "purple"
+          }
+        }
+      },
+      "revision": 1064,
+      "expire_after_minutes": 10080,
+      "metadata": {
+        "expires": 10080
+      },
+      "localization": {
+        "spa": {
+          "2dee52c9-3619-4de4-bb11-aff2080ebb9a": {
+            "attachments": []
+          }
+        }
+      }
+    }
+  ],
+  "campaigns": [],
+  "triggers": [
+    {
+      "trigger_type": "K",
+      "flow": {
+        "uuid": "c996fc46-4fcd-4181-a658-f688566c2577",
+        "name": "PROTOTYPE: NYCx Repairs"
+      },
+      "groups": [],
+      "exclude_groups": [],
+      "keyword": "nycxrepairs"
+    }
+  ],
+  "fields": [],
+  "groups": []
+}
