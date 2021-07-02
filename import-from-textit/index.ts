@@ -83,23 +83,27 @@ function validateActionAssumptions(a: TextItAction) {
 
 function validateExportAssumptions(t: TextitExport) {
   for (let flow of t.flows) {
-    console.log("Validating flow:", flow.name);
     assert.strictEqual(flow.type, "messaging");
     for (let node of flow.nodes) {
-      console.log("Validating node", node.uuid);
-      for (let action of node.actions) {
-        validateActionAssumptions(action);
-      }
-      const { router } = node;
-      if (router) {
-        assert.strictEqual(router.type, "switch");
-        if (router.wait) {
-          assert.strictEqual(router.wait.type, "msg");
+      try {
+        for (let action of node.actions) {
+          validateActionAssumptions(action);
         }
+        const { router } = node;
+        if (router) {
+          assert.strictEqual(router.type, "switch");
+          if (router.wait) {
+            assert.strictEqual(router.wait.type, "msg");
+          }
+        }
+      } catch (e) {
+        console.log(
+          `Error validating node ${node.uuid} in flow "${flow.name}".`
+        );
+        throw e;
       }
     }
   }
-  console.log("All exported flows seem to match our assumptions.");
 }
 
 validateExportAssumptions(EXPORTED_JSON);
