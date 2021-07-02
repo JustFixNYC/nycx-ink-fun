@@ -1,6 +1,6 @@
 ## Prerequisites
 
-- Download the [latest release of ink](https://github.com/inkle/ink/releases) and put it on your `PATH`.
+- Download the [latest release of ink](https://github.com/inkle/ink/releases) and put it on your `PATH` (i.e., you should be able to run `inklecate` from the terminal).
 
 ## Quick start
 
