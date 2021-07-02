@@ -1,0 +1,19 @@
+{
+  "name": "nycx-ink-fun",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/JustFixNYC/nycx-ink-fun.git",
+  "author": "Atul Varma <varmaa@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build:ink": "inklecate nycx.ink",
+    "build": "yarn build:ink && tsc",
+    "watch": "yarn build:ink && tsc --watch --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@types/node": "^15.14.0",
+    "inkjs": "^2.0.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5"
+  }
+}
