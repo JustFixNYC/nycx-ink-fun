@@ -124,14 +124,16 @@ const END = "END";
 
 class InkExporter {
   private lines: string[] = [];
+  private uuidKnotNames = new Map<string, string>();
 
   constructor(readonly flow: TextItFlow) {
+    this.generateKnotNames();
     this.emit(`// Export of TextIt flow "${flow.name}" (${flow.uuid})\n`);
 
     if (flow.nodes.length === 0) return;
 
     const firstNode = flow.nodes[0];
-    this.emit(`-> ${this.labelFor(firstNode.uuid)}\n`);
+    this.emit(`-> ${this.knotFor(firstNode.uuid)}\n`);
 
     for (let node of flow.nodes) {
       this.emitNode(node);
@@ -142,13 +144,23 @@ class InkExporter {
     return this.lines.join("\n");
   }
 
-  private labelFor(uuid: string): string {
-    return uuid.replace(/-/g, "_");
+  private generateKnotNames() {
+    for (let node of this.flow.nodes) {
+      this.uuidKnotNames.set(node.uuid, node.uuid.replace(/-/g, "_"));
+    }
+  }
+
+  private knotFor(uuid: string): string {
+    const knot = this.uuidKnotNames.get(uuid);
+    if (!knot) {
+      throw new Error(`Unknown UUID: ${uuid}`);
+    }
+    return knot;
   }
 
   private emitDivertToExit(exit: TextItExit, indent: string = "") {
     const target = exit.destination_uuid
-      ? this.labelFor(exit.destination_uuid)
+      ? this.knotFor(exit.destination_uuid)
       : END;
     this.emit(`${indent}-> ${target}`);
   }
@@ -158,7 +170,7 @@ class InkExporter {
   }
 
   private emitNode(node: TextItNode) {
-    this.emit(`== ${this.labelFor(node.uuid)} ==\n`);
+    this.emit(`== ${this.knotFor(node.uuid)} ==\n`);
 
     for (let action of node.actions) {
       if (action.type === "send_msg") {
