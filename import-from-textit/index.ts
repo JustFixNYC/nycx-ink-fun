@@ -136,7 +136,11 @@ class InkExporter {
   private knotNames = new Set<string>();
   private emittedNodes = new Set<TextItNode>();
 
-  constructor(readonly flow: TextItFlow, readonly ignoreOtherInput = true) {
+  constructor(
+    readonly flow: TextItFlow,
+    readonly ignoreOtherInput = true,
+    readonly inlineSwitches = true
+  ) {
     this.calculateInlineableUuids();
     this.generateKnotNames();
     this.emit(`// Export of TextIt flow "${flow.name}" (${flow.uuid})\n`);
@@ -306,7 +310,11 @@ class InkExporter {
     } else {
       assert.strictEqual(node.exits.length, 1);
       const { destination_uuid } = node.exits[0];
-      if (destination_uuid && this.inlineableUuids.has(destination_uuid)) {
+      if (
+        this.inlineSwitches &&
+        destination_uuid &&
+        this.inlineableUuids.has(destination_uuid)
+      ) {
         this.emitNode(this.getNodeWithUuid(destination_uuid), false);
       } else {
         this.emitDivertToExit(node.exits[0]);
