@@ -148,10 +148,6 @@ class InkExporter {
     for (let node of flow.nodes) {
       this.emitNode(node);
     }
-
-    for (let uuid of this.inlineableUuids) {
-      this.emit(`// TODO: "${this.knotFor(uuid)}" could be inlined.`);
-    }
   }
 
   get(): string {
@@ -269,6 +265,10 @@ class InkExporter {
 
   private emitNode(node: TextItNode) {
     this.emit(`== ${this.knotFor(node.uuid)} ==\n`);
+
+    if (this.inlineableUuids.has(node.uuid)) {
+      this.emit(`// TODO: This node could be inlined!\n`);
+    }
 
     for (let action of node.actions) {
       if (action.type === "send_msg") {
