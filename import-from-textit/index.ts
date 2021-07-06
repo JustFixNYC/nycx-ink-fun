@@ -131,10 +131,12 @@ const END = "END";
 
 class InkExporter {
   private lines: string[] = [];
+  private inlineableUuids = new Set<string>();
   private uuidKnotNames = new Map<string, string>();
   private knotNames = new Set<string>();
 
   constructor(readonly flow: TextItFlow, readonly ignoreOtherInput = true) {
+    this.calculateInlineableUuids();
     this.generateKnotNames();
     this.emit(`// Export of TextIt flow "${flow.name}" (${flow.uuid})\n`);
 
@@ -146,10 +148,44 @@ class InkExporter {
     for (let node of flow.nodes) {
       this.emitNode(node);
     }
+
+    for (let uuid of this.inlineableUuids) {
+      this.emit(`// TODO: "${this.knotFor(uuid)}" could be inlined.`);
+    }
   }
 
   get(): string {
     return this.lines.join("\n");
+  }
+
+  calculateInlineableUuids() {
+    const linkCounts = new Map<string, number>();
+    const increment = (uuid: string) =>
+      linkCounts.set(uuid, (linkCounts.get(uuid) ?? 0) + 1);
+
+    for (let node of this.flow.nodes) {
+      const { router } = node;
+      if (router) {
+        for (let [cat, exit] of this.iterCategoryExits(router, node.exits)) {
+          const uuid = exit.destination_uuid;
+          if (uuid) {
+            increment(uuid);
+          }
+        }
+      } else {
+        assert.strictEqual(node.exits.length, 1);
+        const { destination_uuid } = node.exits[0];
+        if (destination_uuid) {
+          increment(destination_uuid);
+        }
+      }
+    }
+
+    for (let [uuid, count] of linkCounts.entries()) {
+      if (count === 1) {
+        this.inlineableUuids.add(uuid);
+      }
+    }
   }
 
   private generateUniqueKnotName(base: string, maxTries = 999): string {
