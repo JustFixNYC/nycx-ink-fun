@@ -158,7 +158,7 @@ class InkExporter {
     return this.lines.join("\n");
   }
 
-  calculateInlineableUuids() {
+  private calculateInlineableUuids() {
     const linkCounts = new Map<string, number>();
     const increment = (uuid: string) =>
       linkCounts.set(uuid, (linkCounts.get(uuid) ?? 0) + 1);
