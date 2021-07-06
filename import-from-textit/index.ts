@@ -136,6 +136,7 @@ class InkExporter {
   private uuidKnotNames = new Map<string, string>();
   private knotNames = new Set<string>();
   private emittedNodes = new Set<TextItNode>();
+  private nodesToEmit: TextItNode[] = [];
 
   constructor(
     readonly flow: TextItFlow,
@@ -151,7 +152,13 @@ class InkExporter {
     const firstNode = flow.nodes[0];
     this.emit(`-> ${this.knotFor(firstNode.uuid)}\n`);
 
-    for (let node of flow.nodes) {
+    this.nodesToEmit.push(firstNode);
+
+    while (true) {
+      const node = this.nodesToEmit.pop();
+      if (!node) {
+        break;
+      }
       this.emitNode(node);
     }
   }
@@ -234,9 +241,11 @@ class InkExporter {
   }
 
   private emitDivertToExit(exit: TextItExit, indent: string = "") {
-    const target = exit.destination_uuid
-      ? this.knotFor(exit.destination_uuid)
-      : END;
+    let target = END;
+    if (exit.destination_uuid) {
+      target = this.knotFor(exit.destination_uuid);
+      this.nodesToEmit.push(this.getNodeWithUuid(exit.destination_uuid));
+    }
     this.emit(`${indent}-> ${target}`);
   }
 
