@@ -117,6 +117,7 @@ function validateExportAssumptions(t: TextitExport) {
 }
 
 function escapeInkText(text: string): string {
+  text = text.replace(/\*/g, "\\*");
   return text.replace(/\/\//g, "\\/\\/");
 }
 
