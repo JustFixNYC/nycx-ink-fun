@@ -134,7 +134,7 @@ class InkExporter {
   private uuidKnotNames = new Map<string, string>();
   private knotNames = new Set<string>();
 
-  constructor(readonly flow: TextItFlow) {
+  constructor(readonly flow: TextItFlow, readonly ignoreOtherInput = true) {
     this.generateKnotNames();
     this.emit(`// Export of TextIt flow "${flow.name}" (${flow.uuid})\n`);
 
@@ -212,6 +212,13 @@ class InkExporter {
   ): Generator<[TextItCategory, TextItExit]> {
     let isEmpty = true;
     for (let cat of router.categories) {
+      if (
+        this.ignoreOtherInput &&
+        router.operand === "@input.text" &&
+        cat.name === "Other"
+      ) {
+        continue;
+      }
       for (let exit of exits) {
         if (exit.uuid === cat.exit_uuid) {
           isEmpty = false;
