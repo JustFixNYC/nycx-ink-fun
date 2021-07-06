@@ -20,7 +20,21 @@ Using TextIt for prototyping our NYCx chatbot has proven to be a challenge for o
 
 One solution to these issues is moving the entire flow from TextIt to a full-on programming language. This was explored in [JustFixNYC/textit-webhook-fun][], but it greatly increases the barrier to entry for non-technical users to change the flow.  It also isn't particularly easy to understand, because the flow of control in a computer program whose state needs to be serializable doesn't necessarily represent the actual structure of a conversation very well.
 
-Another option that keeps the barrier to entry low while still resolving TextIt's limitations is to use the _Ink_ narrative scripting language. While the language was originally created for non-technical writers to author "Choose Your Own Adventure"-style games, it has potential to be useful for chatbots. This project is an exploration of this possibility.
+Another option that keeps the barrier to entry low while still addressing TextIt's limitations is to use the _Ink_ narrative scripting language. While the language was originally created for non-technical writers to author "Choose Your Own Adventure"-style games, it has potential to be useful for chatbots. This project is an exploration of this possibility.
+
+## Limitations with this approach
+
+* This prototype doesn't address localization at all. Note that a [medium post about Localization][l10n] seems to indicate that Ink doesn't have any built-in support for it, so we're on our own here. 
+
+  One option is to make some kind of preprocessor that extracts strings for localization, similar to gettext; another is to take the Wikipedia approach and simply use a separate file for each locale. Other approaches may exist too.
+
+* Ink doesn't have a concept of free text input--only distinct choices that the user can choose from. That's not necessarily a bad thing, though, because it kind of decouples the actual conversation flow from the specifics of the UI used to make choices.
+
+  At the time of this writing, the prototype just prints a numbered list of choices and asks the user to pick one, like an old-school phone IVR system. This might actually be ideal for some kinds of choices as it frees the user from having to type long words like "harassment".
+  
+  In any case, though, because of the decoupling between conversation flow and UI, we have the ability to experiment with different kinds of choosing UIs without needing to change the actual Ink source code, which is nice (and also allows us to adapt the conversation to multiple media).
+
+[l10n]: https://johnnemann.medium.com/localizing-ink-with-unity-42a4cf3590f3
 
 ## Prerequisites
 
