@@ -267,7 +267,7 @@ class InkExporter {
     this.emit(`== ${this.knotFor(node.uuid)} ==\n`);
 
     if (this.inlineableUuids.has(node.uuid)) {
-      this.emit(`// TODO: This node could be inlined!\n`);
+      this.emit(`// TODO: This knot could be inlined!\n`);
     }
 
     for (let action of node.actions) {
