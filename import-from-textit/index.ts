@@ -124,25 +124,39 @@ function inkUuid(uuid: string): string {
   return uuid.replace(/-/g, "_");
 }
 
-function exportFlowAsInk(flow: TextItFlow) {
-  let wrote_initial_divert = false;
+class InkExporter {
+  private lines: string[] = [];
 
-  console.log(`// Export of TextIt flow "${flow.name}" (${flow.uuid})\n`);
+  constructor(readonly flow: TextItFlow) {
+    this.emit(`// Export of TextIt flow "${flow.name}" (${flow.uuid})\n`);
 
-  for (let node of flow.nodes) {
-    if (!wrote_initial_divert) {
-      console.log(`-> ${inkUuid(node.uuid)}\n`);
-      wrote_initial_divert = true;
+    if (flow.nodes.length === 0) return;
+
+    const firstNode = flow.nodes[0];
+    this.emit(`-> ${inkUuid(firstNode.uuid)}\n`);
+
+    for (let node of flow.nodes) {
+      this.emitNode(node);
     }
+  }
 
-    console.log(`== ${inkUuid(node.uuid)} ==\n`);
+  get(): string {
+    return this.lines.join("\n");
+  }
+
+  private emit(text: string = "") {
+    this.lines.push(text);
+  }
+
+  private emitNode(node: TextItNode) {
+    this.emit(`== ${inkUuid(node.uuid)} ==\n`);
 
     for (let action of node.actions) {
       if (action.type === "send_msg") {
-        console.log(escapeInkText(action.text) + "\n");
+        this.emit(escapeInkText(action.text) + "\n");
       } else if (action.type === "enter_flow") {
-        console.log(`TODO: Implement this!`);
-        console.log(`ENTER FLOW "${action.flow.name}"\n`);
+        this.emit(`TODO: Implement this!`);
+        this.emit(`ENTER FLOW "${action.flow.name}"\n`);
       }
     }
 
@@ -150,28 +164,28 @@ function exportFlowAsInk(flow: TextItFlow) {
 
     if (router) {
       if (router.result_name) {
-        console.log(`// TextIt result name: ${router.result_name}\n`);
+        this.emit(`// TextIt result name: ${router.result_name}\n`);
       }
       for (let cat of router.categories) {
-        console.log(`* ${cat.name}`);
+        this.emit(`* ${cat.name}`);
         for (let exit of node.exits) {
           if (exit.uuid === cat.exit_uuid) {
             const divert = inkUuid(exit.destination_uuid || "END");
-            console.log(`  -> ${divert}`);
+            this.emit(`  -> ${divert}`);
           }
         }
       }
     } else {
       const exit = node.exits[0];
       const divert = inkUuid(exit.destination_uuid || "END");
-      console.log(`-> ${divert}`);
+      this.emit(`-> ${divert}`);
     }
-    console.log();
+    this.emit();
   }
 }
 
 validateExportAssumptions(EXPORTED_JSON);
 
 for (let flow of EXPORTED_JSON.flows) {
-  exportFlowAsInk(flow);
+  console.log(new InkExporter(flow).get());
 }
