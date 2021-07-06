@@ -120,11 +120,17 @@ function escapeInkText(text: string): string {
   return text.replace(/\/\//g, "\\/\\/");
 }
 
+function slugifyKnotName(text: string): string {
+  text = text.toLowerCase();
+  return text.replace(/[-\s]/g, "_");
+}
+
 const END = "END";
 
 class InkExporter {
   private lines: string[] = [];
   private uuidKnotNames = new Map<string, string>();
+  private knotNames = new Set<string>();
 
   constructor(readonly flow: TextItFlow) {
     this.generateKnotNames();
@@ -146,7 +152,18 @@ class InkExporter {
 
   private generateKnotNames() {
     for (let node of this.flow.nodes) {
-      this.uuidKnotNames.set(node.uuid, node.uuid.replace(/-/g, "_"));
+      let knotName = slugifyKnotName(node.uuid);
+
+      const router = node.router;
+      if (router && router.result_name) {
+        knotName = slugifyKnotName(`${router.type}_${router.result_name}`);
+      }
+      this.uuidKnotNames.set(node.uuid, knotName);
+      if (this.knotNames.has(knotName)) {
+        throw new Error(
+          `Assertion failure, duplicate knot name generated: "${knotName}"`
+        );
+      }
     }
   }
 
@@ -184,9 +201,6 @@ class InkExporter {
     const { router } = node;
 
     if (router) {
-      if (router.result_name) {
-        this.emit(`// TextIt result name: ${router.result_name}\n`);
-      }
       for (let cat of router.categories) {
         this.emit(`* ${cat.name}`);
         for (let exit of node.exits) {
