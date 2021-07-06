@@ -143,8 +143,14 @@ class InkExporter {
   }
 
   private labelFor(uuid: string): string {
-    if (uuid === END) return uuid;
     return uuid.replace(/-/g, "_");
+  }
+
+  private emitDivertToExit(exit: TextItExit, indent: string = "") {
+    const target = exit.destination_uuid
+      ? this.labelFor(exit.destination_uuid)
+      : END;
+    this.emit(`${indent}-> ${target}`);
   }
 
   private emit(text: string = "") {
@@ -173,15 +179,13 @@ class InkExporter {
         this.emit(`* ${cat.name}`);
         for (let exit of node.exits) {
           if (exit.uuid === cat.exit_uuid) {
-            const divert = this.labelFor(exit.destination_uuid || END);
-            this.emit(`  -> ${divert}`);
+            this.emitDivertToExit(exit, "  ");
           }
         }
       }
     } else {
-      const exit = node.exits[0];
-      const divert = this.labelFor(exit.destination_uuid || END);
-      this.emit(`-> ${divert}`);
+      assert.strictEqual(node.exits.length, 1);
+      this.emitDivertToExit(node.exits[0]);
     }
     this.emit();
   }
