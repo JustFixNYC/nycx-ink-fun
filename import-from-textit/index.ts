@@ -120,9 +120,7 @@ function escapeInkText(text: string): string {
   return text.replace(/\/\//g, "\\/\\/");
 }
 
-function inkUuid(uuid: string): string {
-  return uuid.replace(/-/g, "_");
-}
+const END = "END";
 
 class InkExporter {
   private lines: string[] = [];
@@ -133,7 +131,7 @@ class InkExporter {
     if (flow.nodes.length === 0) return;
 
     const firstNode = flow.nodes[0];
-    this.emit(`-> ${inkUuid(firstNode.uuid)}\n`);
+    this.emit(`-> ${this.labelFor(firstNode.uuid)}\n`);
 
     for (let node of flow.nodes) {
       this.emitNode(node);
@@ -144,12 +142,17 @@ class InkExporter {
     return this.lines.join("\n");
   }
 
+  private labelFor(uuid: string): string {
+    if (uuid === END) return uuid;
+    return uuid.replace(/-/g, "_");
+  }
+
   private emit(text: string = "") {
     this.lines.push(text);
   }
 
   private emitNode(node: TextItNode) {
-    this.emit(`== ${inkUuid(node.uuid)} ==\n`);
+    this.emit(`== ${this.labelFor(node.uuid)} ==\n`);
 
     for (let action of node.actions) {
       if (action.type === "send_msg") {
@@ -170,14 +173,14 @@ class InkExporter {
         this.emit(`* ${cat.name}`);
         for (let exit of node.exits) {
           if (exit.uuid === cat.exit_uuid) {
-            const divert = inkUuid(exit.destination_uuid || "END");
+            const divert = this.labelFor(exit.destination_uuid || END);
             this.emit(`  -> ${divert}`);
           }
         }
       }
     } else {
       const exit = node.exits[0];
-      const divert = inkUuid(exit.destination_uuid || "END");
+      const divert = this.labelFor(exit.destination_uuid || END);
       this.emit(`-> ${divert}`);
     }
     this.emit();
