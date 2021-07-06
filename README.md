@@ -6,7 +6,7 @@ This is an attempt to model a chatbot--specifically, [JustFix.nyc][]'s prototype
 
 ## Motivation
 
-Using TextIt for prototyping our NYCx chatbot has proven to be a challenge for our non-technical users for a few reasons:
+Using [TextIt][], a visual no-code platform, for prototyping our NYCx chatbot has proven to be a challenge for our non-technical users for a few reasons:
 
 * Once a conversation becomes slightly complex, it becomes difficult to follow the lines of the flowchart to determine how a flow works.
 
@@ -21,6 +21,8 @@ Using TextIt for prototyping our NYCx chatbot has proven to be a challenge for o
 One solution to these issues is moving the entire flow from TextIt to a full-on programming language. This was explored in [JustFixNYC/textit-webhook-fun][], but it greatly increases the barrier to entry for non-technical users to change the flow.  It also isn't particularly easy to understand, because the flow of control in a computer program whose state needs to be serializable doesn't necessarily represent the actual structure of a conversation very well.
 
 Another option that keeps the barrier to entry low while still addressing TextIt's limitations is to use the _Ink_ narrative scripting language. While the language was originally created for non-technical writers to author "Choose Your Own Adventure"-style games, it has potential to be useful for chatbots. This project is an exploration of this possibility.
+
+[TextIt]: https://textit.com/
 
 ## Limitations with this approach
 
