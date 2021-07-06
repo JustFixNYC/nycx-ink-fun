@@ -206,6 +206,24 @@ class InkExporter {
     this.lines.push(text);
   }
 
+  private *iterCategoryExits(
+    router: TextItRouter,
+    exits: TextItExit[]
+  ): Generator<[TextItCategory, TextItExit]> {
+    let isEmpty = true;
+    for (let cat of router.categories) {
+      for (let exit of exits) {
+        if (exit.uuid === cat.exit_uuid) {
+          isEmpty = false;
+          yield [cat, exit];
+        }
+      }
+    }
+    if (isEmpty) {
+      throw new Error("Assertion failure, no category exits found");
+    }
+  }
+
   private emitNode(node: TextItNode) {
     this.emit(`== ${this.knotFor(node.uuid)} ==\n`);
 
@@ -221,13 +239,9 @@ class InkExporter {
     const { router } = node;
 
     if (router) {
-      for (let cat of router.categories) {
+      for (let [cat, exit] of this.iterCategoryExits(router, node.exits)) {
         this.emit(`* ${cat.name}`);
-        for (let exit of node.exits) {
-          if (exit.uuid === cat.exit_uuid) {
-            this.emitDivertToExit(exit, "  ");
-          }
-        }
+        this.emitDivertToExit(exit, "  ");
       }
     } else {
       assert.strictEqual(node.exits.length, 1);
