@@ -36,6 +36,49 @@ Another option that keeps the barrier to entry low while still addressing TextIt
 
 [l10n]: https://johnnemann.medium.com/localizing-ink-with-unity-42a4cf3590f3
 
+## Observations so far
+
+We've used [Priority Guides][] in the past at JustFix, but a downside of them is that, because they don't produce a live, functioning system, they quickly become out-of-sync with the actual product. Also, the guides are static text, which makes it difficult to simulate what an actual user would go through.
+
+Ink's writer-driven approach makes it feel like creating a priority guide that's interactive, and which could potentially even be used in production, thanks to Ink's flexible API.  The fact that it forces all decision paths to be enumerated, while keeping the details of implementation decoupled from the flow logic, means that writers can easily simulate all possible conditions without necessarily needing to know exactly what needs to be done in order to trigger them.
+
+Here's an example.  At the time of this writing, this is the Ink source for predicting a user's housing type:
+
+```
+What is your address and borough (without your unit/apartment number)? Example: 654 Park Place, Brooklyn
+
+>>> PREDICT_HOUSING_TYPE
+
++ RENT_STABILIZED
+  It's likely that you have a rent stabilized apartment. This means that you have extra protections against eviction and rent increases.
+  -> private_landlord.rent_regulated
++ NYCHA
+  -> nycha
++ MARKET_RATE
+  It looks like you live in market rate (non rent-regulated) housing.
+  -> private_landlord.non_rent_regulated
++ INVALID
+  Hmm, that doesn't seem to be a valid address. Let's try again.
+  -> predict_housing_type
++ ERROR
+  Unfortunately, we're having technical difficulties and can't help you identify your housing type right now.
+  -> beginning
+```
+
+Here the text `>>> PREDICT_HOUSING_TYPE` is a special instruction that we--not Ink--process in [`fun.ts`](fun.ts) to actually take free-text user input and pass it to an API, and use the API result to drive the conversation.  While the writer is authoring the experience in Inky--the interactive editor for Ink--however, all they'll see are the possible outcomes of that process, each of which can be clicked on (Inky presents them as though they're just conversation options):
+
+<img src="inky-screenshot.png">
+
+This has a number of advantages:
+
+* It's clear to the writer what all the possible outcomes are. In contrast, if the writer was presented with the same free-text input a user is presented with, they might not even know that some choices exist, and as a result they will not know that they need to design for them.
+
+* It's straightforward for the writer to ensure that unusual edge cases are handled gracefully from a conversational design perspective.  For example, the case in which a network error occurs is a click away, and doesn't require the writer to set up infrastructure to actually simulate the edge case themselves.
+
+* It potentially simplifies testing, since all external dependencies are mocked out by default.
+
+[Priority Guides]: https://alistapart.com/article/priority-guides-a-content-first-alternative-to-wireframes/
+
 ## Prerequisites
 
 - Download the [latest release of ink](https://github.com/inkle/ink/releases) and put it on your `PATH` (i.e., you should be able to run `inklecate` from the terminal).
