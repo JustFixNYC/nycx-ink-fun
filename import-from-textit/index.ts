@@ -134,6 +134,7 @@ class InkExporter {
   private inlineableUuids = new Set<string>();
   private uuidKnotNames = new Map<string, string>();
   private knotNames = new Set<string>();
+  private emittedNodes = new Set<TextItNode>();
 
   constructor(readonly flow: TextItFlow, readonly ignoreOtherInput = true) {
     this.calculateInlineableUuids();
@@ -263,11 +264,27 @@ class InkExporter {
     }
   }
 
-  private emitNode(node: TextItNode) {
-    this.emit(`== ${this.knotFor(node.uuid)} ==\n`);
+  private getNodeWithUuid(uuid: string): TextItNode {
+    for (let node of this.flow.nodes) {
+      if (node.uuid === uuid) {
+        return node;
+      }
+    }
+    throw new Error(`No node exists with UUID "${uuid}"`);
+  }
 
-    if (this.inlineableUuids.has(node.uuid)) {
-      this.emit(`// TODO: This knot could be inlined!\n`);
+  private emitNode(node: TextItNode, emitKnot = true) {
+    if (this.emittedNodes.has(node)) return;
+    this.emittedNodes.add(node);
+
+    if (emitKnot) {
+      this.emit(`== ${this.knotFor(node.uuid)} ==\n`);
+
+      if (this.inlineableUuids.has(node.uuid)) {
+        this.emit(
+          `// This knot is only diverted-to once, consider inlining it.\n`
+        );
+      }
     }
 
     for (let action of node.actions) {
@@ -288,7 +305,12 @@ class InkExporter {
       }
     } else {
       assert.strictEqual(node.exits.length, 1);
-      this.emitDivertToExit(node.exits[0]);
+      const { destination_uuid } = node.exits[0];
+      if (destination_uuid && this.inlineableUuids.has(destination_uuid)) {
+        this.emitNode(this.getNodeWithUuid(destination_uuid), false);
+      } else {
+        this.emitDivertToExit(node.exits[0]);
+      }
     }
     this.emit();
   }
