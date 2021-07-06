@@ -56,6 +56,12 @@ Then in another terminal, run:
 node fun.js
 ```
 
+You can also try converting an existing TextIt flow to Ink with:
+
+```
+node import-from-textit/index.js
+```
+
 ## Related projects
 
 - [JustFixNYC/textit-webhook-fun][] is a 2020 experiment to model a TextIt/RapidPro flow as a finite state machine in TypeScript.
