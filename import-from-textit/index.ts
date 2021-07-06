@@ -122,7 +122,9 @@ function escapeInkText(text: string): string {
 
 function slugifyKnotName(text: string): string {
   text = text.toLowerCase();
-  return text.replace(/[-\s]/g, "_");
+  text = text.replace(/[-\s]/g, "_");
+  text = text.replace(/[^a-z0-9_]/g, "");
+  return text.slice(0, 70);
 }
 
 const END = "END";
@@ -150,6 +152,17 @@ class InkExporter {
     return this.lines.join("\n");
   }
 
+  private generateUniqueKnotName(base: string, maxTries = 999): string {
+    if (!this.knotNames.has(base)) return base;
+    for (let i = 2; i < maxTries; i++) {
+      const candidate = `${base}_${i}`;
+      if (!this.knotNames.has(candidate)) {
+        return candidate;
+      }
+    }
+    throw new Error(`Unable to generate unique knot name for "${base}"`);
+  }
+
   private generateKnotNames() {
     for (let node of this.flow.nodes) {
       let knotName = slugifyKnotName(node.uuid);
@@ -157,13 +170,20 @@ class InkExporter {
       const router = node.router;
       if (router && router.result_name) {
         knotName = slugifyKnotName(`${router.type}_${router.result_name}`);
+      } else if (node.actions.length > 0) {
+        const firstAction = node.actions[0];
+        if (firstAction.type === "send_msg") {
+          knotName = slugifyKnotName(firstAction.text);
+        }
       }
+      knotName = this.generateUniqueKnotName(knotName);
       this.uuidKnotNames.set(node.uuid, knotName);
       if (this.knotNames.has(knotName)) {
         throw new Error(
           `Assertion failure, duplicate knot name generated: "${knotName}"`
         );
       }
+      this.knotNames.add(knotName);
     }
   }
 
