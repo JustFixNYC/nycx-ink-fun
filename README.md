@@ -28,7 +28,7 @@ Another option that keeps the barrier to entry low while still addressing TextIt
 
   One option is to make some kind of preprocessor that extracts strings for localization, similar to gettext; another is to take the Wikipedia approach and simply use a separate file for each locale. Other approaches may exist too.
 
-* Ink doesn't have a concept of free text input--only distinct choices that the user can choose from. That's not necessarily a bad thing, though, because it kind of decouples the actual conversation flow from the specifics of the UI used to make choices.
+* Ink doesn't have a concept of free text input--only distinct choices that the user can choose from. This deviates from our current medium of SMS messaging. However, this isn't necessarily a bad thing, because it decouples the actual conversation flow from the specifics of the UI used to make choices.
 
   At the time of this writing, the prototype just prints a numbered list of choices and asks the user to pick one, like an old-school phone IVR system. This might actually be ideal for some kinds of choices as it frees the user from having to type long words like "harassment".
   
@@ -65,18 +65,21 @@ What is your address and borough (without your unit/apartment number)? Example: 
   -> beginning
 ```
 
-Here the text `>>> PREDICT_HOUSING_TYPE` is a special instruction that we--not Ink--process in [`fun.ts`](fun.ts) to actually take free-text user input and pass it to an API, and use the API result to drive the conversation.  While the writer is authoring the experience in Inky--the interactive editor for Ink--however, all they'll see are the possible outcomes of that process, each of which can be clicked on (Inky presents them as though they're just conversation options):
+Here the text `>>> PREDICT_HOUSING_TYPE` is a special instruction that we--not Ink--process in [`fun.ts`](fun.ts) to actually take free-text user input and pass it to an API, and use the API result to drive the conversation.
+
+However, while the writer is authoring the experience in Inky--the interactive editor for Ink--all they'll see are the possible outcomes of that process, each of which can be clicked on (Inky presents them as though they're just conversation options):
 
 <img src="inky-screenshot.png">
 
-This has a number of advantages:
+While at first this seems like a downside, since the author can't freely input text like a user would, it actually has a number of advantages:
 
 * It's clear to the writer what all the possible outcomes are. In contrast, if the writer was presented with the same free-text input a user is presented with, they might not even know that some choices exist, and as a result they will not know that they need to design for them.
 
 * It's straightforward for the writer to ensure that unusual edge cases are handled gracefully from a conversational design perspective.  For example, the case in which a network error occurs is a click away, and doesn't require the writer to set up infrastructure to actually simulate the edge case themselves.
 
-* It potentially simplifies testing, since all external dependencies are mocked out by default.
+Needless to say, this approach also potentially simplifies testing, since all external dependencies are mocked out by default. What's particularly exciting is also that, at least in the context of [Inkle's own development process][gdc_talk], _writers_ can drive this process, or at least have a strong voice in it: they can write out whatever conventions feel natural to them, and engineers can parse and interpret those conventions to make those wishes reality.  This echoes the design of systems like Markdown, whose conventions were derived from looking at how people encoded rich-text concepts into plain-text emails.
 
+[gdc_talk]: https://www.youtube.com/watch?v=3eYHtDGOM8U
 [Priority Guides]: https://alistapart.com/article/priority-guides-a-content-first-alternative-to-wireframes/
 
 ## Running this prototype
