@@ -209,11 +209,16 @@ class InkExporter {
   }
 
   private generateKnotNames() {
+    let isFirstNode = true;
+
     for (let node of this.flow.nodes) {
       let knotName = slugifyKnotName(node.uuid);
 
       const router = node.router;
-      if (router && router.result_name) {
+      if (isFirstNode) {
+        knotName = slugifyKnotName(`start_${this.flow.name}`);
+        isFirstNode = false;
+      } else if (router && router.result_name) {
         knotName = slugifyKnotName(`${router.type}_${router.result_name}`);
       } else if (node.actions.length > 0) {
         const firstAction = node.actions[0];
