@@ -18,9 +18,11 @@ const app = express();
 app.use(urlencoded({ extended: false }));
 
 app.post("/sms", (req, res) => {
+  // https://www.twilio.com/docs/messaging/guides/webhook-request
   const body = req.body.Body;
+  const from = req.body.From;
 
-  if (body) {
+  if (body && from) {
     const twiml = new MessagingResponse();
 
     // TODO: Actually start/continue conversation.
@@ -30,7 +32,7 @@ app.post("/sms", (req, res) => {
     res.end(twiml.toString());
   } else {
     res.writeHead(400, { "Content-Type": "text/plain" });
-    res.end("Body parameter required!");
+    res.end("Body and From parameters required!");
   }
 });
 
