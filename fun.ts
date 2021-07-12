@@ -59,6 +59,12 @@ function parseStoryChoice(story: Story, input: string): number | undefined {
   }
 }
 
+function getStoryChoicesMenu(story: Story): string {
+  return story.currentChoices
+    .map((choice) => `${choice.index + 1}. ${choice.text}`)
+    .join("\n");
+}
+
 async function processConversation(
   cs: ConversationState
 ): Promise<ConversationState> {
@@ -86,12 +92,7 @@ async function processConversation(
       }
     } else {
       if (didStoryContinue) {
-        queuedOutput = [
-          ...queuedOutput,
-          story.currentChoices
-            .map((choice) => `${choice.index + 1}. ${choice.text}`)
-            .join("\n"),
-        ];
+        queuedOutput = [...queuedOutput, getStoryChoicesMenu(story)];
       }
 
       if (queuedInput.length > 0) {
