@@ -67,9 +67,9 @@ function getStoryChoicesMenu(story: Story): string {
 }
 
 async function processConversation(
-  cs: ConversationState
+  cs: ConversationState,
+  story = new Story(storyJson)
 ): Promise<ConversationState> {
-  const story = new Story(storyJson);
   let { specialInputMode, queuedInput, queuedOutput } = cs;
   let didStoryContinue = false;
   let didChoose = false;
