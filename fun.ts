@@ -71,6 +71,17 @@ async function processConversation(
   const story = new Story(storyJson);
   let { specialInputMode, queuedInput, queuedOutput } = cs;
   let didStoryContinue = false;
+  let output = (message: string) => {
+    queuedOutput = [...queuedOutput, message];
+  };
+  let consumeInput = () => {
+    let input = null;
+    if (queuedInput.length > 0) {
+      input = queuedInput[0];
+      queuedInput = queuedInput.slice(1);
+    }
+    return input;
+  };
   story.state.LoadJson(JSON.stringify(cs.storyState));
 
   if (story.canContinue) {
@@ -79,29 +90,29 @@ async function processConversation(
     if (message.startsWith(SPECIAL_INSTRUCTION_PREDICT_HOUSING_TYPE)) {
       specialInputMode = "predictHousingType";
     } else {
-      queuedOutput = [...queuedOutput, message];
+      output(message);
     }
   }
 
   if (story.currentChoices.length > 0) {
     if (specialInputMode === "predictHousingType") {
-      if (queuedInput.length > 0) {
-        await choosePredictedHousingType(story, queuedInput[0]);
+      const input = consumeInput();
+      if (input) {
+        await choosePredictedHousingType(story, input);
         specialInputMode = null;
-        queuedInput = queuedInput.slice(1);
       }
     } else {
       if (didStoryContinue) {
-        queuedOutput = [...queuedOutput, getStoryChoicesMenu(story)];
+        output(getStoryChoicesMenu(story));
       }
 
-      if (queuedInput.length > 0) {
-        const choiceIdx = parseStoryChoice(story, queuedInput[0]);
-        queuedInput = queuedInput.slice(1);
+      const input = consumeInput();
+      if (input) {
+        const choiceIdx = parseStoryChoice(story, input);
         if (choiceIdx !== undefined) {
           story.ChooseChoiceIndex(choiceIdx);
         } else {
-          queuedOutput = [...queuedOutput, INVALID_CHOICE_MSG];
+          output(INVALID_CHOICE_MSG);
         }
       }
     }
