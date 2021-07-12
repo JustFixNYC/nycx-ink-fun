@@ -22,7 +22,10 @@ const rawText = fs
 
 const storyJson = JSON.parse(rawText);
 
-async function choosePredictedHousingType(story: Story, input: string) {
+async function getPredictedHousingTypeChoiceIdx(
+  story: Story,
+  input: string
+): Promise<number> {
   const choiceEntries = story.currentChoices.map(
     (choice) =>
       [validateHousingType(choice.text), choice.index] as [HousingType, number]
@@ -36,9 +39,7 @@ async function choosePredictedHousingType(story: Story, input: string) {
   }
 
   const housingType = await predictHousingType(input);
-  const choiceIdx = assertNotUndefined(choiceMap.get(housingType));
-
-  story.ChooseChoiceIndex(choiceIdx);
+  return assertNotUndefined(choiceMap.get(housingType));
 }
 
 type SpecialInputMode = "predictHousingType";
@@ -71,16 +72,21 @@ async function processConversation(
   const story = new Story(storyJson);
   let { specialInputMode, queuedInput, queuedOutput } = cs;
   let didStoryContinue = false;
-  let output = (message: string) => {
+  let didChoose = false;
+  const output = (message: string) => {
     queuedOutput = [...queuedOutput, message];
   };
-  let consumeInput = () => {
+  const consumeInput = () => {
     let input = null;
     if (queuedInput.length > 0) {
       input = queuedInput[0];
       queuedInput = queuedInput.slice(1);
     }
     return input;
+  };
+  const choose = (idx: number) => {
+    story.ChooseChoiceIndex(idx);
+    didChoose = true;
   };
   story.state.LoadJson(JSON.stringify(cs.storyState));
 
@@ -98,7 +104,7 @@ async function processConversation(
     if (specialInputMode === "predictHousingType") {
       const input = consumeInput();
       if (input) {
-        await choosePredictedHousingType(story, input);
+        choose(await getPredictedHousingTypeChoiceIdx(story, input));
         specialInputMode = null;
       }
     } else {
@@ -110,12 +116,17 @@ async function processConversation(
       if (input) {
         const choiceIdx = parseStoryChoice(story, input);
         if (choiceIdx !== undefined) {
-          story.ChooseChoiceIndex(choiceIdx);
+          choose(choiceIdx);
         } else {
           output(INVALID_CHOICE_MSG);
         }
       }
     }
+  }
+
+  if (didChoose) {
+    // Ink always prints the choice the user made, which we don't want to do.
+    story.Continue();
   }
 
   return {
