@@ -1,5 +1,4 @@
 node_modules
 *.ink.json
 *.js
-.env
 .session-data/
