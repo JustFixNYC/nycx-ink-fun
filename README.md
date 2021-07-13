@@ -4,7 +4,7 @@ This is an attempt to model a chatbot--specifically, [JustFix.nyc][]'s prototype
 [nycx]: https://www1.nyc.gov/html/nycx/housingchallenge/challenge
 [Ink]: https://www.inklestudios.com/ink/
 
-## Motivation
+## The problem
 
 Using [TextIt][], a visual no-code platform, for prototyping our NYCx chatbot has proven to be a challenge for our non-technical users for a few reasons:
 
@@ -18,10 +18,22 @@ Using [TextIt][], a visual no-code platform, for prototyping our NYCx chatbot ha
 
 * It's difficult to make changes to the flow that affect many conversation points at once. For example, what if we wanted to provide a "go back" option that allowed the user to "rewind" the conversation at any step in the flow?  This would be very cumbersome to do in TextIt, and would significantly affect the visual complexity of the flow.
 
+## A proposed solution
+
 One solution to these issues is moving the entire flow from TextIt to a full-on programming language. This was explored in [JustFixNYC/textit-webhook-fun][], but it greatly increases the barrier to entry for non-technical users to change the flow.  It also isn't particularly easy to understand, because the flow of control in a computer program whose state needs to be serializable doesn't necessarily represent the actual structure of a conversation very well.
 
-Another option that keeps the barrier to entry low while still addressing TextIt's limitations is to use the _Ink_ narrative scripting language. While the language was originally created for non-technical writers to author "Choose Your Own Adventure"-style games, it has potential to be useful for chatbots. This project is an exploration of this possibility.
+Another option that keeps the barrier to entry low while still addressing TextIt's limitations is to use the _Ink_ narrative scripting language.
 
+_Ink_ was originally created for non-technical writers to author interactive narrative. The idea is roughly that plain text is actually an ideal medium in which to write an interactive story. For example, in a [2017 GDC Talk][], at [5:23](https://youtu.be/3eYHtDGOM8U?t=323) Inkle's Joseph Humfrey describes how film scripts are used to communicate not only dialogue and narration, but also instructions on how a scene is structured and cut together in a final edit. In a similar way, Ink aims to make it easy for writers with non-technical backgrounds to create interactive narratives.
+
+Also important to note is that Ink's approach actually scales: it's been used to create huge, novel-length interactive narratives like [80 Days][], which suggests that it can retain its readability as a narrative grows in size (rather than turning into a pile of confusing spaghetti).
+
+From an engineering perspective, Ink is actually independent of any particular delivery mechanism or "framework".  It makes no assumptions about whether it's being used in a web-based _Choose Your Own Adventure_ game, an interactive movie, a first-person shooter, or something else entirely.  Furthermore, its API is quite powerful and flexible.  All of this makes it potentially useful for making chatbots.
+
+This project is an exploration of this possibility.
+
+[80 Days]: https://www.inklestudios.com/80days/
+[2017 GDC Talk]: https://youtu.be/3eYHtDGOM8U
 [TextIt]: https://textit.com/
 
 ## Limitations with this approach
@@ -79,9 +91,8 @@ While at first this seems like a downside, since the author can't freely input t
 
 * It's straightforward for the writer to ensure that unusual edge cases are handled gracefully from a conversational design perspective.  For example, the case in which a network error occurs is a click away, and doesn't require the writer to set up infrastructure to actually simulate the edge case themselves.
 
-Needless to say, this approach also potentially simplifies testing, since all external dependencies are mocked out by default. What's particularly exciting is also that, at least in the context of [Inkle's own development process][gdc_talk], _writers_ can drive this process, or at least have a strong voice in it: they can write out whatever conventions feel natural to them, and engineers can parse and interpret those conventions to make those wishes reality.  This echoes the design of systems like Markdown, whose conventions were derived from looking at how people encoded rich-text concepts into plain-text emails.
+Needless to say, this approach also potentially simplifies testing, since all external dependencies are mocked out by default. What's particularly exciting is also that, at least in the context of Inkle's own development process, _writers_ can drive this process, or at least have a strong voice in it: they can write out whatever conventions feel natural to them, and engineers can parse and interpret those conventions to make those wishes reality.  This echoes the design of systems like Markdown, whose conventions were derived from looking at how people encoded rich-text concepts into plain-text emails.
 
-[gdc_talk]: https://www.youtube.com/watch?v=3eYHtDGOM8U
 [Priority Guides]: https://alistapart.com/article/priority-guides-a-content-first-alternative-to-wireframes/
 
 ## Running this prototype
@@ -151,3 +162,12 @@ node import-from-textit/index.js
 - [toolness/justfix-interview-ts-fun](https://github.com/toolness/justfix-interview-ts-fun) is a 2018 experiment to build a conversational system that could work across many different media including SMS and web.
 
 [JustFixNYC/textit-webhook-fun]: https://github.com/JustFixNYC/textit-webhook-fun
+
+## Ink resources
+
+- [Writing web-based interactive fiction with ink](https://www.inklestudios.com/ink/web-tutorial/) is a beginner-friendly tutorial that introduces _Ink_ to non-technical audiences. Not only does it teach the basics of _Ink_, but it also explains how to use _Inky_ to try out one's script and export it to the web for sharing.
+
+- [Writing with ink](https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md) is a more in-depth guide that explains all the advanced features of _Ink_.
+
+- [Ink's `documentation` directory](https://github.com/inkle/ink/tree/master/Documentation), located in their primary code repository, contains documents about the internal workings of _Ink_.
+
