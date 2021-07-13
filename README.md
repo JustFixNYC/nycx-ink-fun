@@ -100,17 +100,43 @@ yarn
 yarn watch
 ```
 
-Then in another terminal, run:
+This will set up the TypeScript transpiler to rebuild your code whenever you change it. (If you'd rather not do that, you can run `yarn build` to just build the source once.)
+
+You will then need to open a new terminal to actually run the code.
+
+#### Trying the chatbot in the terminal
+
+To run the chatbot in the console, run:
 
 ```
 node fun.js
 ```
+
+#### Using the chatbot via SMS
+
+You can also start a [Twilio Webhook][] server that can integrate with Twilio to serve the chatbot over SMS.
+
+To start it, run:
+
+```
+node server.js
+```
+
+You will then need to expose port 3000 of your system to the internet (consider using a tool like [ngrok][]) and configure Twilio to send a `POST` to the `/sms` path of your server whenever a message comes in.
+
+Note that at the time of this writing, the server is intended for demonstration purposes only. It shouldn't be used in production, as it has scaling and security issues.
+
+[ngrok]: https://ngrok.com/
+
+#### Converting TextIt flows to Ink
 
 You can also try converting an existing TextIt flow to Ink with:
 
 ```
 node import-from-textit/index.js
 ```
+
+[Twilio Webhook]: https://www.twilio.com/docs/usage/webhooks
 
 ## Related projects
 
