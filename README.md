@@ -95,6 +95,20 @@ Needless to say, this approach also potentially simplifies testing, since all ex
 
 [Priority Guides]: https://alistapart.com/article/priority-guides-a-content-first-alternative-to-wireframes/
 
+## What about free-text input?
+
+It should be noted that _Ink_'s design has a concept of discrete choices, while SMS-based chatbots need to respond to arbitrary user input.
+
+For a few reasons, this could be considered a _feature_ rather than a bug:
+
+* **It encourages a separation of concerns.** When writers are writing, they should really only have to worry about the choices a user has, rather than _how_ the user is making those choices.  The minute details of text parsing--for example, whether to interpret "yup" as the same thing as "yes"--is not really something the writer should _need_ to worry about. (That said, we can always support the use of [tags][] and other _Ink_ features to allow writers to provide "hints" about how to map user input to choices, too--there are no absolutes here!)
+
+* **It becomes easy to offer the chatbot in a variety of different media.** Because the _Ink_ script is independent of the minutiae of choice selection, this allows us, for example, to deliver the chatbot as both an SMS bot _and_ as a richer web-based experience, in which the user can click on choices instead of writing text.
+
+* **It's easy to experiment with different ways of presenting the user with choices.**  At the time of this writing, the SMS and console-based versions of the chatbot simply display a numbered list of choices, and require the user to respond with a number. But it's quite easy to change this to e.g. require the user to respond with the first letter of each choice (e.g. "Respond with 'y' for yes or 'n' for no"), or something else entirely.  This would be extremely cumbersome in TextIt, since it would require us to manually change the logic of every single "wait for response" block.
+
+[tags]: https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md#tags
+
 ## Running this prototype
 
 ### Prerequisites
