@@ -33,6 +33,10 @@ app.post("/sms", async (req, res) => {
   const inputMessage = req.body.Body;
   const phoneNumber = req.body.From;
 
+  // Note that we're not actually authenticating that this request
+  // was made by a trusted source (e.g. Twilio). That's part of
+  // why this server is intended for demonstration purposes only!
+
   if (inputMessage && phoneNumber) {
     console.log(`Received message from ${phoneNumber}: ${inputMessage}`);
 
@@ -104,5 +108,9 @@ app.post("/sms", async (req, res) => {
 });
 
 http.createServer(app).listen(PORT, () => {
+  console.log(`This is a development server with scaling and security issues.`);
+  console.log(
+    `It is for demonstration purposes only. Please do NOT use it in production.`
+  );
   console.log(`HTTP server listening on port ${PORT}.`);
 });
