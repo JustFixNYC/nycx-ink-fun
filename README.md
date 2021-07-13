@@ -24,7 +24,7 @@ One solution to these issues is moving the entire flow from TextIt to a full-on 
 
 Another option that keeps the barrier to entry low while still addressing TextIt's limitations is to use the _Ink_ narrative scripting language.
 
-_Ink_ was originally created for non-technical writers to author interactive narrative. The idea is roughly that plain text is actually an ideal medium in which to write an interactive story. For example, in a [2017 GDC Talk][], at [5:23](https://youtu.be/3eYHtDGOM8U?t=323) Inkle's Joseph Humfrey describes how film scripts are used to communicate not only dialogue and narration, but also instructions on how a scene is structured and cut together in a final edit. In a similar way, Ink aims to make it easy for writers with non-technical backgrounds to create interactive narratives.
+_Ink_ was originally created for non-technical writers to author interactive narrative. The idea is roughly that plain text is actually an ideal medium in which to write an interactive story. For example, in the 2017 GDC Talk [Creating Interactive Film Scripts for 3D Adventures with Ink][gdc], at [5:23](https://youtu.be/3eYHtDGOM8U?t=323) Inkle's Joseph Humfrey describes how film scripts are used to communicate not only dialogue and narration, but also instructions on how a scene is structured and cut together in a final edit. In a similar way, Ink aims to make it easy for writers with non-technical backgrounds to create interactive narratives.
 
 Also important to note is that Ink's approach actually scales: it's been used to create huge, novel-length interactive narratives like [80 Days][], which suggests that it can retain its readability as a narrative grows in size (rather than turning into a pile of confusing spaghetti).
 
@@ -33,7 +33,7 @@ From an engineering perspective, Ink is actually independent of any particular d
 This project is an exploration of this possibility.
 
 [80 Days]: https://www.inklestudios.com/80days/
-[2017 GDC Talk]: https://youtu.be/3eYHtDGOM8U
+[gdc]: https://youtu.be/3eYHtDGOM8U
 [TextIt]: https://textit.com/
 
 ## Limitations with this approach
