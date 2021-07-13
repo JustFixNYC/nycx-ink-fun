@@ -124,6 +124,12 @@ node server.js
 
 You will then need to expose port 3000 of your system to the internet (consider using a tool like [ngrok][]) and configure Twilio to send a `POST` to the `/sms` path of your server whenever a message comes in.
 
+Alternatively, you can test the server out locally with curl, e.g.:
+
+```
+curl -d "Body=hi&From=%2B15551234567" http://localhost:3000/sms
+```
+
 Note that at the time of this writing, the server is intended for demonstration purposes only. It shouldn't be used in production, as it has scaling and security issues.
 
 [ngrok]: https://ngrok.com/
