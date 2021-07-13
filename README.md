@@ -10,7 +10,7 @@ Using [TextIt][], a visual no-code platform, for prototyping our NYCx chatbot ha
 
 * Once a conversation becomes slightly complex, it becomes difficult to follow the lines of the flowchart to determine how a flow works. For example, here's a screenshot of part of the TextIt version of the NYCx flow at the time of this writing:
 
-  > <img src="nycx-textit-screenshot.png">
+  <img src="nycx-textit-screenshot.png">
 
 * While creating sub-flows is an option to reduce conversational complexity, it has limitations:
   * It's still hard to link to a specific point within a sub-flow.
