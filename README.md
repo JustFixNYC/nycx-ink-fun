@@ -44,11 +44,9 @@ This project is an exploration of this possibility.
 
   One option is to make some kind of preprocessor that extracts strings for localization, similar to gettext; another is to take the Wikipedia approach and simply use a separate file for each locale. Other approaches may exist too.
 
-* Ink doesn't have a concept of free text input--only distinct choices that the user can choose from. This deviates from our current medium of SMS messaging. However, this isn't necessarily a bad thing, because it decouples the actual conversation flow from the specifics of the UI used to make choices.
+* Ink doesn't have a concept of free text input--only distinct choices that the user can choose from. This deviates from our current medium of SMS messaging. However, this isn't necessarily a bad thing; see the [What about free text input?](#what-about-free-text-input) section below for more analysis.
 
   At the time of this writing, the prototype just prints a numbered list of choices and asks the user to pick one, like an old-school phone IVR system. This might actually be ideal for some kinds of choices as it frees the user from having to type long words like "harassment".
-  
-  In any case, though, because of the decoupling between conversation flow and UI, we have the ability to experiment with different kinds of choosing UIs without needing to change the actual Ink source code, which is nice (and also allows us to adapt the conversation to multiple media).
 
 [l10n]: https://johnnemann.medium.com/localizing-ink-with-unity-42a4cf3590f3
 
